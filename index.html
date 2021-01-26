@@ -42,7 +42,25 @@
     <meta name="theme-color" content="#478ac9">
     <link rel="canonical" href="index.html">
     <meta property="og:url" content="index.html">
-  </head>
+  <script>
+    function gdprConfirmed() {
+        return true;
+    }
+    if (gdprConfirmed()) {
+    document.write("\
+    \
+    <!-- Google Analytics -->\
+    <gascript async src=\"https://www.googletagmanager.com/gtag/js?id=G-2VV5Z2J8DT\"></gascript>\
+    <gascript>\
+        window.dataLayer = window.dataLayer || [];\
+        function gtag(){dataLayer.push(arguments);}\
+        gtag('js', new Date());\
+        gtag('config', 'G-2VV5Z2J8DT');\
+    </gascript>\
+    <!-- End Google Analytics -->\
+    ".replace(/gascript/g, 'script'));
+    }
+    </script></head>
   <body data-home-page="Home.html" data-home-page-title="Home" class="u-body">
     <section class="u-clearfix u-gradient u-section-1" id="carousel_9761">
       <div class="u-expanded-width u-palette-5-light-2 u-shape u-shape-rectangle u-shape-1"></div>
