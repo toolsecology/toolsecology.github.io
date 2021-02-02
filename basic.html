@@ -228,8 +228,8 @@ body {
 }
 
 .resp-sharing-button svg {
-  width: 2em;
-  height: 2em;
+  width: 1.8em;
+  height: 1.8em;
   margin: 0;
   vertical-align: middle;
 }
@@ -448,21 +448,14 @@ body {
         </a>  
         </br></br>
 
-        <p style="text-align: left;">Embed: 
+        <p>Embed: 
                 <a href="#" onClick="window.open(urlHowtoEmbed, '_blank')">(How do I embed a tool in my website?)</a>
             </p>
           </br>
 				<label for="frameColor">Frame Color: </label> <input type="color" class="toolEmbedColor" id="frameColor" value="#00008b" onchange="setEmbedText()">
 				
-				<span>&nbsp;&nbsp;&nbsp;&nbsp;Size: </span>
-				<input type="radio" id="toolSmall" class="toolEmbedRadio" name="toolSize" value="small" onchange="setEmbedText()">
-				<label for="toolSmall">Small</label>
-				<input type="radio" id="toolMedium" class="toolEmbedRadio" name="toolSize" value="medium" checked="checked" onchange="setEmbedText()">
-				<label for="toolMedium">Medium</label>
-				<input type="radio" id="toolLarge" class="toolEmbedRadio" name="toolSize" value="large" onchange="setEmbedText()">
-				<label for="toolLarge">Large</label>
 				</br>
-				<textarea id="textEmbed" class="toolEmbedTextarea" rows="2" cols="40"></textarea>
+				<textarea id="textEmbed" class="toolEmbedTextarea" rows="3" cols="40"></textarea>
 				</br>
 				<button class="toolEmbedButton" onclick="copyClipboard()">Copy to clipboard</button>								
 			</div>
@@ -565,18 +558,10 @@ function setEmbedText() {
     var sizeLarge = document.getElementById("toolLarge");
 	  var text;
 	
-    text='<div style="position: relative; overflow: hidden; ';
-
-    if(sizeSmall.checked) {
-        text+='width:max(33%,'+mimimumX.toFixed(1).toString()+'px); padding-top: max('+(33*aspectRatio).toFixed(1).toString()+'%,'+(mimimumX*aspectRatio).toFixed(1).toString()+'px);';
-    } else if (sizeMedium.checked) {
-        text+='width:max(66%,'+mimimumX.toFixed(1).toString()+'px); padding-top: max('+(66*aspectRatio).toFixed(1).toString()+'%,'+(mimimumX*aspectRatio).toFixed(1).toString()+'px);';
-    } else {
-        text+='width:max(100%,'+mimimumX.toFixed(1).toString()+'px); padding-top: max('+(100*aspectRatio).toFixed(1).toString()+'%,'+(mimimumX*aspectRatio).toFixed(1).toString()+'px);';
-    }
+    text='<div style="overflow: hidden; padding-top: 80%; position: relative;">';
       
-    text+='"><iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color.value)+
-        '" title="'+title+'" style="border:none; position: absolute; top: 0; left: 0; bottom: 0; right: 0; width:100%; height:100%;"></iframe></div>';
+    text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color.value)+
+        '" title="'+title+'" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen></iframe></div>';
 
     document.getElementById("textEmbed").value = text;
 
