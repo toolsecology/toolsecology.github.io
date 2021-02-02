@@ -512,8 +512,8 @@ const urlMoreInfo = urlSite+"Info-Basic.html";
 const urlFreeTools = urlSite+"Free-Tools.html";
 const urlHowtoEmbed = urlSite+"Howto-Embed.html";
 const mimimumX=480;
-const urlShare = urlTool;
-const textShare="Hey! check this awesome tool!";
+const urlShare = "https://"+urlTool;
+const textShare="Hey! Check this Awesome Tool!";
 
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
