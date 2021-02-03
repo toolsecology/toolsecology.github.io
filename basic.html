@@ -382,7 +382,8 @@ body {
 	<div id="flipCard" class="toolFlipCard">
 		<div id="flipCardInner" class="toolFlipCardInner">
 			<div class="toolFlipCardFront">
-				Tool goes here...
+        Tool goes here...
+        <button onclick="toggleFullscreen();">Toggle Fullscreen Mode</button>
 			</div>
 
 			<div class="toolFlipCardBack toolEmbedText">
@@ -579,6 +580,28 @@ function setEmbedText() {
     document.getElementById("resp-sharing-button--hackernews").href = "https://news.ycombinator.com/submitlink?u="+encodeURIComponent(urlShare)+"&t="+encodeURIComponent(textShare);
     document.getElementById("resp-sharing-button--vk").href = "http://vk.com/share.php?title="+encodeURIComponent(textShare)+"&url="+encodeURIComponent(urlShare);
     document.getElementById("resp-sharing-button--telegram").href = "https://telegram.me/share/url?text="+encodeURIComponent(textShare)+"&url="+encodeURIComponent(urlShare);
+}
+
+function toggleFullscreen() {
+    let elem=document.getElementsByTagName("html")[0];        
+
+    if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        }
+    }
 }
 
 function init() {
