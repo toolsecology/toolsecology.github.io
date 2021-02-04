@@ -15,6 +15,8 @@
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     
     
+    
+    
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
@@ -48,7 +50,7 @@
     </script></head>
   <body class="u-body">
     <section class="u-align-center u-clearfix u-palette-5-light-1 u-section-1" id="carousel_607a">
-      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+      <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
           <div class="u-layout">
             <div class="u-layout-row">
@@ -75,6 +77,77 @@
         </div>
       </div>
     </section>
+    <section class="u-align-center u-clearfix u-section-2" id="sec-fe4f">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h2 class="u-text u-text-1">Geometry</h2>
+        <p class="u-text u-text-default u-text-2">Calculate the area and volume of common shapes</p>
+        <div class="u-expanded-width u-list u-repeater u-list-1">
+          <div class="u-align-center u-container-style u-list-item u-repeater-item" data-href="javascript:selectTool('coneCalculator')">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-1">
+              <img src="/tools/cone.png" alt="" class="u-image u-image-default u-image-1">
+              <h3 class="u-align-center u-text u-text-3">Cone Calculator</h3>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item" data-href="javascript:selectTool('cubeCalculator')">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-2">
+              <img src="/tools/cube.jpg" alt="" class="u-image u-image-default u-image-2">
+              <h3 class="u-align-center u-text u-text-4">Cube Calculator</h3>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item" data-href="javascript:selectTool('cuboidCalculator')">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-3">
+              <img src="/tools/cuboid.jpg" alt="" class="u-image u-image-default u-image-3">
+              <h3 class="u-align-center u-text u-text-5">Cuboid Calculator</h3>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item" data-href="javascript:selectTool('cylinderCalculator')">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-4">
+              <img src="/tools/cylinder.jpg" alt="" class="u-image u-image-default u-image-4">
+              <h3 class="u-align-center u-text u-text-6">Cylinder Calculator</h3>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item" data-href="javascript:selectTool('rightPyramidCalculator')">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-5">
+              <img src="/tools/rightPyramid.jpg" alt="" class="u-image u-image-default u-image-5">
+              <h3 class="u-align-center u-text u-text-7">Right Pyramid Calculator</h3>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item" data-href="javascript:selectTool('sphereCalculator')">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-6">
+              <img src="/tools/sphere.jpg" alt="" class="u-image u-image-default u-image-6">
+              <h3 class="u-align-center u-text u-text-8">Sphere Calculator</h3>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item" data-href="javascript:selectTool('triangularPrismCalculator')">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-7">
+              <img src="/tools/triangularPrism.jpg" alt="" class="u-image u-image-default u-image-7">
+              <h3 class="u-align-center u-text u-text-9">Triangular Prism Calculator</h3>
+            </div>
+          </div>
+          <div class="u-align-center u-container-style u-list-item u-repeater-item" data-href="javascript:selectTool('tubeCalculator')">
+            <div class="u-container-layout u-similar-container u-valign-top u-container-layout-8">
+              <img src="/tools/tube.jpg" alt="" class="u-image u-image-default u-image-8">
+              <h3 class="u-align-center u-text u-text-10">Tube Calculator</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+          <div style="max-width:800px; margin: auto;">
+            <div style="overflow: hidden; padding-top: 200%; position: relative;">
+              <iframe id="tool" src="http://www.toolsecology.com/tools/coneCalculator.html?frameColor=%2300008b" title="Cone Calculator" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen=""></iframe>
+            </div>
+          </div>
+          <script> function jump(anchor) {
+        location.hash = "#" + anchor;
+    }
+    function selectTool(toolName) {
+        var tool = document.getElementById("tool");
+        tool.src="http://www.toolsecology.com/tools/"+toolName+".html";
+        jump("tool");
+    } </script>
+       
     
     
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-1795"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
