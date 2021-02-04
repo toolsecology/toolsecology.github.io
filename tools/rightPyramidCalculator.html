@@ -448,10 +448,16 @@ body {
 
         <div class="toolRow">
           <div class="column9 centerVertical">                                
-              <label class="toolSmallLabel" for="radius">Radius (r)</label>            
-              <input id="radius" class="toolLineText"  type="text" autocomplete="off" 
+              <label class="toolSmallLabel" for="length">Length (l)</label>            
+              <input id="length" class="toolLineText"  type="text" autocomplete="off" 
                   size="10" min="0" step="any" autofocus oninput="calculate()" onchange="setInput(this)">
-              <select class="toolUnitText" id="unitsRadius" onchange="calculate()">                    
+              <select class="toolUnitText" id="unitsLength" onchange="calculate()">                    
+              </select></br>
+
+              <label class="toolSmallLabel" for="width">Width (w)</label>            
+              <input id="width" class="toolLineText"  type="text" autocomplete="off" 
+                  size="10" min="0" step="any" autofocus oninput="calculate()" onchange="setInput(this)">
+              <select class="toolUnitText" id="unitsWidth" onchange="calculate()">                    
               </select></br>
               
               <label class="toolSmallLabel" for="height">Height (h)</label>                                
@@ -478,7 +484,7 @@ body {
           </div>
           
           <div class="column3 center centerVertical">
-              <img src="cone.png" alt="Cone" style="width:100%;"> 
+              <img src="rightPyramid.jpg" alt="Right Pyramid" style="width:100%;"> 
           </div>
         </div>        
         
@@ -573,7 +579,7 @@ body {
 					<img src="/tools/plus.png" alt="Plus" style="width:100%;">
 				</div>          
 				<div class="column9 centerVertical toolFooterText">                   
-					More info about the cone calculator
+					More info about the right pyramid calculator
 				</div>                   
 			</div>
 		</div>
@@ -606,12 +612,12 @@ body {
 
 <script>
 
-const title="Cone Calculator";
+const title="Right Pyramid Calculator";
 var frameColor="rgba(0, 0, 139, 1)";
 const aspectRatio=0.8;
 const urlSite="//www.toolsecology.com/";
-const urlTool = urlSite+"tools/"+"coneCalculator.html";
-const urlMoreInfo = urlSite+"Free-Tools.html#coneCalculator";
+const urlTool = urlSite+"tools/"+"rightPyramidCalculator.html";
+const urlMoreInfo = urlSite+"Free-Tools.html#rightPyramidCalculator";
 const urlFreeTools = urlSite+"Free-Tools.html";
 const urlHowtoEmbed = urlSite+"Howto-Embed.html";
 const mimimumX=480;
@@ -713,21 +719,29 @@ function setInput(input) {
 }
 
 function calculate() {
+    var l=document.getElementById("length").value;
+    var lUnits = document.getElementById("unitsLength").value;
+    var w=document.getElementById("width").value;
+    var wUnits = document.getElementById("unitsWidth").value;
     var h=document.getElementById("height").value;
     var hUnits = document.getElementById("unitsHeight").value;
-    var r=document.getElementById("radius").value;
-    var rUnits = document.getElementById("unitsRadius").value;
+   
     var areaUnits = document.getElementById("unitsArea").value;
     var volumeUnits = document.getElementById("unitsVolume").value;
 
-    h=toFloat(h);
-    r=toFloat(r);
+    l=toFloat(l);
+    w=toFloat(w);
+    h=toFloat(h);    
 
-    h=h*unitLength[hUnits];
-    r=r*unitLength[rUnits];
-
-    var area=PI*r*r+(PI*r*Math.sqrt(h*h+r*r));
-    var volume=(PI*r*r*h)/3;
+    l=l*unitLength[lUnits];
+    w=w*unitLength[wUnits];
+    h=h*unitLength[hUnits];    
+    
+    var s1=Math.sqrt(l*l/4+h*h);
+    var s2=Math.sqrt(w*w/4+h*h);
+    
+    var area=w*l+w*s1+l*s2;
+    var volume=(l*w*h)/3;
 
     if(area>0) {
         var comparison=findComparisonArea(area);        
@@ -780,8 +794,9 @@ function init() {
     flipCard(false);
     setEmbedText();
     
+    initUnits(document.getElementById("unitsLength"), unitLength);
+    initUnits(document.getElementById("unitsWidth"), unitLength);
     initUnits(document.getElementById("unitsHeight"), unitLength);
-    initUnits(document.getElementById("unitsRadius"), unitLength);
     initUnits(document.getElementById("unitsArea"), unitArea);
     initUnits(document.getElementById("unitsVolume"), unitVolume);
 

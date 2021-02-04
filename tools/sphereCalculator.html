@@ -452,13 +452,7 @@ body {
               <input id="radius" class="toolLineText"  type="text" autocomplete="off" 
                   size="10" min="0" step="any" autofocus oninput="calculate()" onchange="setInput(this)">
               <select class="toolUnitText" id="unitsRadius" onchange="calculate()">                    
-              </select></br>
-              
-              <label class="toolSmallLabel" for="height">Height (h)</label>                                
-              <input id="height" class="toolLineText" type="text" autocomplete="off"
-                  size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)">
-              <select class="toolUnitText" id="unitsHeight" onchange="calculate()">                    
-              </select></br></br>
+              </select></br></br>                 
              
               <label class="toolSmallLabel" for="area">Area</label>            
               <input class="toolLineTextResult" type="text" id="area" size="10" min="0" readonly>
@@ -478,7 +472,7 @@ body {
           </div>
           
           <div class="column3 center centerVertical">
-              <img src="cone.png" alt="Cone" style="width:100%;"> 
+              <img src="/tools/sphere.jpg" alt="Sphere" style="width:100%;"> 
           </div>
         </div>        
         
@@ -573,7 +567,7 @@ body {
 					<img src="/tools/plus.png" alt="Plus" style="width:100%;">
 				</div>          
 				<div class="column9 centerVertical toolFooterText">                   
-					More info about the cone calculator
+					More info about the sphere calculator
 				</div>                   
 			</div>
 		</div>
@@ -606,12 +600,12 @@ body {
 
 <script>
 
-const title="Cone Calculator";
+const title="Sphere Calculator";
 var frameColor="rgba(0, 0, 139, 1)";
 const aspectRatio=0.8;
 const urlSite="//www.toolsecology.com/";
-const urlTool = urlSite+"tools/"+"coneCalculator.html";
-const urlMoreInfo = urlSite+"Free-Tools.html#coneCalculator";
+const urlTool = urlSite+"tools/"+"sphereCalculator.html";
+const urlMoreInfo = urlSite+"Free-Tools.html#sphereCalculator";
 const urlFreeTools = urlSite+"Free-Tools.html";
 const urlHowtoEmbed = urlSite+"Howto-Embed.html";
 const mimimumX=480;
@@ -712,22 +706,18 @@ function setInput(input) {
     input.value=x;
 }
 
-function calculate() {
-    var h=document.getElementById("height").value;
-    var hUnits = document.getElementById("unitsHeight").value;
+function calculate() {    
     var r=document.getElementById("radius").value;
     var rUnits = document.getElementById("unitsRadius").value;
     var areaUnits = document.getElementById("unitsArea").value;
     var volumeUnits = document.getElementById("unitsVolume").value;
 
-    h=toFloat(h);
     r=toFloat(r);
 
-    h=h*unitLength[hUnits];
     r=r*unitLength[rUnits];
 
-    var area=PI*r*r+(PI*r*Math.sqrt(h*h+r*r));
-    var volume=(PI*r*r*h)/3;
+    var area=4*PI*r*r;
+    var volume=(4*PI*r*r*r)/3;
 
     if(area>0) {
         var comparison=findComparisonArea(area);        
@@ -780,7 +770,6 @@ function init() {
     flipCard(false);
     setEmbedText();
     
-    initUnits(document.getElementById("unitsHeight"), unitLength);
     initUnits(document.getElementById("unitsRadius"), unitLength);
     initUnits(document.getElementById("unitsArea"), unitArea);
     initUnits(document.getElementById("unitsVolume"), unitVolume);

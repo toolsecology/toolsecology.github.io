@@ -448,25 +448,23 @@ body {
 
         <div class="toolRow">
           <div class="column9 centerVertical">                                
-              <label class="toolSmallLabel" for="radius">Radius (r)</label>            
-              <input id="radius" class="toolLineText"  type="text" autocomplete="off" 
+              <label class="toolSmallLabel" for="radius1">Outer Radius&nbsp;(R)</label>            
+              <input id="radius1" class="toolLineText"  type="text" autocomplete="off" 
                   size="10" min="0" step="any" autofocus oninput="calculate()" onchange="setInput(this)">
-              <select class="toolUnitText" id="unitsRadius" onchange="calculate()">                    
+              <select class="toolUnitText" id="unitsRadius1" onchange="calculate()">                    
+              </select></br>
+
+              <label class="toolSmallLabel" for="radius2">Inner Radius&nbsp;(r)</label>            
+              <input id="radius2" class="toolLineText"  type="text" autocomplete="off" 
+                  size="10" min="0" step="any" autofocus oninput="calculate()" onchange="setInput(this)">
+              <select class="toolUnitText" id="unitsRadius2" onchange="calculate()">                    
               </select></br>
               
               <label class="toolSmallLabel" for="height">Height (h)</label>                                
               <input id="height" class="toolLineText" type="text" autocomplete="off"
                   size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)">
               <select class="toolUnitText" id="unitsHeight" onchange="calculate()">                    
-              </select></br></br>
-             
-              <label class="toolSmallLabel" for="area">Area</label>            
-              <input class="toolLineTextResult" type="text" id="area" size="10" min="0" readonly>
-              <select class="toolUnitText" id="unitsArea" onchange="calculate()">                    
-              </select>
-
-              <div id="comparisonArea" class="toolComparison center">            
-              </div>
+              </select></br></br>                          
 
               <label class="toolSmallLabel" for="volume">Volume</label>            
               <input class="toolLineTextResult" type="text" id="volume" size="10" min="0" readonly>
@@ -478,7 +476,7 @@ body {
           </div>
           
           <div class="column3 center centerVertical">
-              <img src="cone.png" alt="Cone" style="width:100%;"> 
+              <img src="/tools/tube.jpg" alt="Tube" style="width:100%;"> 
           </div>
         </div>        
         
@@ -573,7 +571,7 @@ body {
 					<img src="/tools/plus.png" alt="Plus" style="width:100%;">
 				</div>          
 				<div class="column9 centerVertical toolFooterText">                   
-					More info about the cone calculator
+					More info about the tube calculator
 				</div>                   
 			</div>
 		</div>
@@ -606,12 +604,12 @@ body {
 
 <script>
 
-const title="Cone Calculator";
+const title="Tube Calculator";
 var frameColor="rgba(0, 0, 139, 1)";
 const aspectRatio=0.8;
 const urlSite="//www.toolsecology.com/";
-const urlTool = urlSite+"tools/"+"coneCalculator.html";
-const urlMoreInfo = urlSite+"Free-Tools.html#coneCalculator";
+const urlTool = urlSite+"tools/"+"tubeCalculator.html";
+const urlMoreInfo = urlSite+"Free-Tools.html#tubeCalculator";
 const urlFreeTools = urlSite+"Free-Tools.html";
 const urlHowtoEmbed = urlSite+"Howto-Embed.html";
 const mimimumX=480;
@@ -713,40 +711,26 @@ function setInput(input) {
 }
 
 function calculate() {
+    var r1=document.getElementById("radius1").value;
+    var rUnits1 = document.getElementById("unitsRadius1").value;
+    var r2=document.getElementById("radius2").value;
+    var rUnits2 = document.getElementById("unitsRadius2").value;
+
     var h=document.getElementById("height").value;
     var hUnits = document.getElementById("unitsHeight").value;
-    var r=document.getElementById("radius").value;
-    var rUnits = document.getElementById("unitsRadius").value;
-    var areaUnits = document.getElementById("unitsArea").value;
+    
     var volumeUnits = document.getElementById("unitsVolume").value;
 
+    r1=toFloat(r1);
+    r2=toFloat(r2);
     h=toFloat(h);
-    r=toFloat(r);
 
-    h=h*unitLength[hUnits];
-    r=r*unitLength[rUnits];
-
-    var area=PI*r*r+(PI*r*Math.sqrt(h*h+r*r));
-    var volume=(PI*r*r*h)/3;
-
-    if(area>0) {
-        var comparison=findComparisonArea(area);        
-
-        if(comparison.scale<0.1) {
-            document.getElementById("comparisonArea").innerHTML = "";
-        } else if(comparison.scale>0.9 && comparison.scale<1.1) {
-            document.getElementById("comparisonArea").innerHTML = "... or about the surface of "+comparison.object+".";
-        } else {
-            document.getElementById("comparisonArea").innerHTML = "... or about "+comparison.scale+" times the surface of "+comparison.object+".";
-        }
-    } else {
-        document.getElementById("comparisonArea").innerHTML = "";
-    }
-
-    area=area/unitArea[areaUnits];
-    area=parseFloat(area.toFixed(6));
-    document.getElementById("area").value = area;
-
+    r1=r1*unitLength[rUnits1];
+    r2=r2*unitLength[rUnits2];
+    h=h*unitLength[hUnits];   
+ 
+    var volume=Math.abs((PI*h)*(r1*r1-r2*r2));
+    
     if(volume>0) {
         var comparison=findComparisonVolume(volume);        
 
@@ -780,9 +764,9 @@ function init() {
     flipCard(false);
     setEmbedText();
     
+    initUnits(document.getElementById("unitsRadius1"), unitLength);
+    initUnits(document.getElementById("unitsRadius2"), unitLength);
     initUnits(document.getElementById("unitsHeight"), unitLength);
-    initUnits(document.getElementById("unitsRadius"), unitLength);
-    initUnits(document.getElementById("unitsArea"), unitArea);
     initUnits(document.getElementById("unitsVolume"), unitVolume);
 
     calculate();
