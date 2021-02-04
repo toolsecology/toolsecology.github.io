@@ -22,8 +22,8 @@ const comparisonArea = {'a Lincoln penny':2.85160E-4, 'a pinball':2.83E-3,'a ten
 
  const comparisonVolume = {'an average rain droplet':5e-7, 'a large drop of water':1e-6, 'a tablespoon':1.5e-5, 'a golf ball':4.067269e-5, 
  'a pop can':0.00035, 'a large milk carton':0.002, 
- 'an American football': 0.004471, 'a standard beer cooler':0.025, 'a typical garden wheelbarrow':0.0849505, 'a fridge':0.5, 
- 'a shipping container':33.187344, 'an olympic swimming pool':2500, 'the empire state building':1047723.3239,
+ 'an American football': 0.004471, 'a standard beer cooler':0.025, 'a typical garden wheelbarrow':0.0849505, 'a barrel of oil':0.158, 
+ 'a fridge':0.5, 'a shipping container':33.187344, 'an olympic swimming pool':2500, 'the empire state building':1047723.3239,
  'the great pyramid of Giza':2.6e6, 'mount Fuji':4e+11, 'the Moon':2.1968e+19, 'the Earth':1.0832e+21, 'the Sun':1.4092e+27};
 
 function initUnits (el, unit) {
