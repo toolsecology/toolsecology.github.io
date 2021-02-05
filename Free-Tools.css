@@ -184,7 +184,6 @@
   min-height: 999px;
   grid-template-columns: calc(33.3333% - 7px) calc(33.3333% - 7px) calc(33.3333% - 7px);
   grid-template-rows: auto auto;
-  height: auto;
   grid-gap: 10px 10px;
   margin: 15px 0 60px;
 }
@@ -314,6 +313,7 @@
   .u-section-2 .u-list-1 {
     min-height: 824px;
     grid-template-columns: repeat(3, calc(33.333333333333336% - 7px));
+    height: auto;
     margin-right: initial;
     margin-left: initial;
   }
@@ -439,9 +439,14 @@
 
 .u-section-3 .u-custom-html-1 {
   min-height: 1140px;
-  height: auto;
   width: 570px;
   margin: 20px auto 0;
+}
+
+@media (max-width: 1199px) {
+  .u-section-3 .u-custom-html-1 {
+    height: auto;
+  }
 }
 
 @media (max-width: 767px) {
