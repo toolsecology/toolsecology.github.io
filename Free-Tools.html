@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Interactive media, Interactive tools, Custom tools, Bypass adblock, Boost your profit, Increase earning potential. ">
+    <meta name="keywords" content="Interactive media, Free tools, Interactive tools, Custom tools, Bypass adblock, Boost your profit, Increase earning potential. ">
     <meta name="description" content="Delivering custom interactive tools that give value to your products and customers.">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
     <title>Free Tools</title>
@@ -21,7 +21,8 @@
 		"@context": "http://schema.org",
 		"@type": "Organization",
 		"name": "Tools Ecology",
-		"url": "index.html"
+		"url": "index.html",
+		"logo": "images/logo.png"
 }</script>
     <meta property="og:title" content="Free Tools">
     <meta property="og:type" content="website">
@@ -48,7 +49,39 @@
     ".replace(/gascript/g, 'script'));
     }
     </script></head>
-  <body class="u-body">
+  <body class="u-body"><header class="u-align-center u-clearfix u-gradient u-header u-header" id="sec-9dea"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <a href="https://nicepage.com" class="u-image u-logo u-image-1">
+          <img src="images/logo.png" class="u-logo-image u-logo-image-1" data-image-width="148.0987">
+        </a>
+        <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+          <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px; font-weight: 700; text-transform: uppercase;">
+            <a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-grey-90" href="#">
+              <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</symbol>
+</defs></svg>
+            </a>
+          </div>
+          <div class="u-nav-container">
+            <ul class="u-nav u-spacing-30 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-grey-90" href="Home.html" style="padding: 10px 0px;">Home</a>
+</li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-grey-90" href="Free-Tools.html" style="padding: 10px 0px;">Free Tools</a>
+</li><li class="u-nav-item"><a class="u-border-2 u-border-active-palette-1-base u-border-hover-palette-1-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-palette-1-base u-text-grey-90 u-text-hover-grey-90" href="Howto-Embed.html" style="padding: 10px 0px;">Howto Embed</a>
+</li></ul>
+          </div>
+          <div class="u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Free-Tools.html">Free Tools</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Howto-Embed.html">Howto Embed</a>
+</li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
     <section class="u-align-center u-clearfix u-palette-5-light-1 u-section-1" id="carousel_607a">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
@@ -134,21 +167,20 @@
       </div>
     </section>
     <section class="u-clearfix u-section-3" id="sec-7439">
+      
           <div style="max-width:800px; margin: auto;">
             <div style="overflow: hidden; padding-top: 200%; position: relative;">
-              <iframe id="tool" src="" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" allowfullscreen=""></iframe>
+              <iframe id="tool" src="" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen=""></iframe>
             </div>
           </div>
-          <script> 
-          function jump(anchor) {
-                    document.getElementById(anchor).scrollIntoView();
-          }
-          function selectTool(toolName) {
-              var tool = document.getElementById("tool");
-              tool.src="https://www.toolsecology.com/tools/"+toolName+".html";
-              jump("tool");
-          } 
-          </script>     
+          <script> function jump(anchor) {        document.getElementById(anchor).scrollIntoView();
+    }
+    function selectTool(toolName) {
+        var tool = document.getElementById("tool");
+        tool.src="https://www.toolsecology.com/tools/"+toolName+".html";
+        jump("tool");
+    } </script>
+      
     </section>
     
     
