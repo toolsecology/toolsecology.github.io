@@ -529,22 +529,18 @@ body {
         <input id="totalNumberImpressions" class="toolLineTextResult"  type="text" autocomplete="off" 
         size="10" min="0" step="any" oninput="calculate()" onchange="setPosFloatInput(this)" readonly>
         <span class="toolUnit">Impressions</span>
-        </div>
-
-        <div class="toolRow">
-        <label class="toolSmallLabel" for="ctr">Click through Rate in % (CTR)
-        <div class="tooltip">
-        <img class="toolMoreInfo" src="questionMark.svg" alt="(?)"> 
-        <span class="tooltiptext">Ratio of visitors who click on the ad to the number of total visitors who view the ad. Google adSense has a value of about 0.11%.</span>
-        </div>
-        </label>
-        <input id="ctr" class="toolLineText"  type="text" autocomplete="off" 
-        size="10" min="0" step="any" oninput="calculate()" onchange="setPercentInput(this)">
-        <span class="toolUnit">% Clicks/Impression</span>
-        </div>               
+        </div>         
 
         <div class="toolLineBreak"></div>
-        <div class="toolLineBreak"><u>Earnings per impression</u></div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel"><u>Earnings per impression</u>
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Fill this section only if you receive income based on impressions.</span>
+        </div>
+        </label>
+        </div>
 
         <div class="toolRow">
         <label class="toolSmallLabel" for="rpm">Revenue per thousand impressions (RPM)
@@ -571,8 +567,27 @@ body {
         </div>
 
         <div class="toolLineBreak"></div>
-        <div class="toolLineBreak"><u>Earnings per click</u></div>
+        
+        <div class="toolRow">
+        <label class="toolSmallLabel"><u>Earnings per click</u>
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Fill this section only if you receive income based on clicks.</span>
+        </div>
+        </label>
+        </div>
 
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="ctr">Click through Rate in % (CTR)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Ratio of visitors who click on the ad to the number of total visitors who view the ad. Google adSense has a value of about 0.11%.</span>
+        </div>
+        </label>
+        <input id="ctr" class="toolLineText"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setPercentInput(this)">
+        <span class="toolUnit">% Clicks/Impression</span>
+        </div>              
 
         <div class="toolRow">
         <label class="toolSmallLabel" for="epc">Earnings per click (EPC)
@@ -599,20 +614,28 @@ body {
         <span class="toolUnit">$</span>
         </div>
 
-        <div class="toolLineBreak"></div>   
-        <div class="toolLineBreak"><u>Earnings per commission</u></div>           
-
+        <div class="toolLineBreak"></div>            
+        
         <div class="toolRow">
-        <label class="toolSmallLabel" for="salesCommission">Sales commission
+        <label class="toolSmallLabel"><u>Earnings per commission</u>
         <div class="tooltip">
         <img class="toolMoreInfo" src="questionMark.svg" alt="(?)"> 
-        <span class="tooltiptext">(Input this value only if you receive income based on commissions). Average amount of money you earn when you make a sale. Usually, commissions range from 5$ to 50$.</span>
+        <span class="tooltiptext">Fill this section only if you receive income based on commissions.</span>
         </div>
         </label>
-        <input id="salesCommission" class="toolLineText"  type="text" autocomplete="off" 
-        size="10" min="0" step="any" oninput="calculate()" onchange="setMoneyInput(this)">
-        <span class="toolUnit">$/Conversion</span>
         </div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="ctr2">Click through Rate in % (CTR)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Ratio of visitors who click on the ad to the number of total visitors who view the ad. Google adSense has a value of about 0.11%.</span>
+        </div>
+        </label>
+        <input id="ctr2" class="toolLineText"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setPercentInput(this)">
+        <span class="toolUnit">% Clicks/Impression</span>
+        </div>            
 
         <div class="toolRow">
         <label class="toolSmallLabel" for="cvr">Conversion Rate in % (CVR)
@@ -624,6 +647,18 @@ body {
         <input id="cvr" class="toolLineText"  type="text" autocomplete="off" 
         size="10" min="0" step="any" oninput="calculate()" onchange="setPercentInput(this)">
         <span class="toolUnit">% Conversions/Clicks</span>
+        </div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="salesCommission">Sales commission
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">(Input this value only if you receive income based on commissions). Average amount of money you earn when you make a sale. Usually, commissions range from 5$ to 50$.</span>
+        </div>
+        </label>
+        <input id="salesCommission" class="toolLineText"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setMoneyInput(this)">
+        <span class="toolUnit">$/Conversion</span>
         </div>
 
         <div class="toolRow">
@@ -923,6 +958,7 @@ function calculate() {
     var numberPages=document.getElementById("numberPages").value;
     var numberImpressions=document.getElementById("numberImpressions").value;
     var ctr=document.getElementById("ctr").value;
+    var ctr2=document.getElementById("ctr2").value;
     var cvr=document.getElementById("cvr").value;
     var rpm=document.getElementById("rpm").value;
     var epc=document.getElementById("epc").value;
@@ -932,6 +968,7 @@ function calculate() {
     numberPages=toFloat(numberPages);
     numberImpressions=toFloat(numberImpressions);
     ctr=toFloat(ctr);
+    ctr2=toFloat(ctr2);
     cvr=toFloat(cvr);
     rpm=toFloat(rpm);
     epc=toFloat(epc);
@@ -946,7 +983,7 @@ function calculate() {
     var clickEarnings = epc*totalNumberImpressions*ctr/100;
     document.getElementById("clickEarnings").value = setFloatOutput(clickEarnings);
 
-    var commissionEarnings = totalNumberImpressions*cvr/100*ctr/100*salesCommission;
+    var commissionEarnings = totalNumberImpressions*cvr/100*ctr2/100*salesCommission;
     document.getElementById("commissionEarnings").value = setFloatOutput(commissionEarnings);
 
     var totalEarnings = impressionEarnings+clickEarnings+commissionEarnings;
