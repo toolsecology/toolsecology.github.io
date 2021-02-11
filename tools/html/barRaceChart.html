@@ -835,6 +835,19 @@ function toggleFullscreen() {
 
 <script>
 
+function insertLastValue(data) {
+    var value = {};
+
+    for(let i = 0; i < data.length; i++) { 
+      if(data[i].name in value) {
+        data[i].lastValue = value[data[i].name];
+      } else {
+        data[i].lastValue = data[i].value;
+      }
+      value[data[i].name]=data[i].value;
+    }
+}
+
 function animate() {
     var tickDuration = parseInt(animationSpeed);
 
@@ -858,7 +871,7 @@ function animate() {
     d3.csv(urlData).then(function(data) {       
       data.forEach(d => {       
         d.rank = (+d.rank)-1,
-        d.lastValue = +d.lastValue,
+//        d.lastValue = +d.lastValue,
         d.value = +d.value,
         d.index = +d.index,
         d.value = isNaN(d.value) ? 0 : d.value,
@@ -872,6 +885,8 @@ function animate() {
     let barPadding = (height-(margin.bottom+margin.top))/(top_n*5);
 
     let labelSlice = data.filter(d => d.index == index && !isNaN(d.value));
+
+    insertLastValue(data);
         
     let x = d3.scaleLinear()
       .domain([0, d3.max(labelSlice, d => d.value)])
