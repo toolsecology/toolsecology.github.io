@@ -202,9 +202,9 @@ body {
 }
 
 .toolEmbedInput {
-    margin: 1vw;
-    padding: 1vw;
-    font-size: 3vw;
+    margin: 0.5vw;
+    padding: 0.5vw;
+    font-size: 2.5vw;
     border-radius: 1vw;
     border: 0.5vw solid var(--frameColor);
 }
@@ -634,12 +634,16 @@ body {
         <p>Embed: 
                 <a href="" onClick="window.open(urlHowtoEmbed, '_blank')">(How do I embed a tool in my website?)</a>
             </p>
-<!--           
+
+            </br> 
+            <label for="chartTitle">Chart Title:</label>
+            <input type="text" id="chartTitle" class="toolEmbedInput" size="24" onchange="setEmbedText()">
+            </br>   
             <label for="chartSubTitle">Chart Subtitle:</label>
             <input type="text" id="chartSubTitle" class="toolEmbedInput" size="24" onchange="setEmbedText()">
             </br>            
-            <label for="yearFontSize">Year Font Size:</label>
-            <input type="text" id="yearFontSize" class="toolEmbedInput" size="8" onchange="setEmbedText()"> Pixels
+            <label for="labelFontSize">Label Font Size:</label>
+            <input type="text" id="labelFontSize" class="toolEmbedInput" size="8" onchange="setEmbedText()"> Pixels
             </br>
             <label for="urlMusic">URL of Music:</label>
             <input type="text" id="urlMusic" class="toolEmbedInput" size="24" onchange="setEmbedText()">
@@ -650,7 +654,6 @@ body {
             <label for="animationSpeed">Animation Tick Duration:</label>
             <input type="text" id="animationSpeed" class="toolEmbedInput" size="8" onchange="setEmbedText()"> ms
             </br>
--->
 
           </br>
 				<label for="frameColor">Frame Color: </label> <input type="color" class="toolEmbedColor" id="frameColor" value="#00008b" onchange="setEmbedText()">
@@ -704,7 +707,7 @@ body {
 
 <script>
 
-const title="Top Global Brands";
+const title="Bar Race Chart";
 var frameColor="rgba(0, 0, 139, 1)";
 const aspectRatio=1.2;
 const urlSite="//www.toolsecology.com/";
@@ -717,11 +720,11 @@ const urlShare = "https:"+urlTool;
 const textShare="Hey! Check this Awesome Tool!";
 
 var frameColor="rgba(0, 0, 139, 1)";
-var chartSubTitle="(Brand value, Thousand $)";
+var chartSubTitle="";
 var titleFontSize="4";
-var yearFontSize="80";
-var urlMusic="../music/bensound-epic.mp3";
-var urlData="../data/brand_values.csv";
+var labelFontSize="80";
+var urlMusic="";
+var urlData="";
 var animationSpeed="500";
 
 var animateState=0;  // 0=Stop, 1=Run, 2=Pause, 3=Restart, 4=Finished
@@ -777,7 +780,13 @@ function setEmbedText() {
     text='<div style="overflow: hidden; padding-top: 80%; position: relative;">';
       
     text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color.value)+
-        '" title="'+title+'" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen></iframe></div>';
+        '?chartTitle='+encodeURIComponent(title)+
+        '?chartSubTitle='+encodeURIComponent(chartSubTitle)+
+        '?labelFontSize='+encodeURIComponent(labelFontSize)+
+        '?urlMusic='+encodeURIComponent(urlMusic)+
+        '?urlData='+encodeURIComponent(urlData)+
+        '?animationSpeed='+encodeURIComponent(animationSpeed)+
+        '" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen></iframe></div>';
 
     document.getElementById("textEmbed").value = text;
 
@@ -859,10 +868,10 @@ function animate() {
     var top_n = d3.max(data, d => d.rank)+1;    
     let barPadding = (height-(margin.bottom+margin.top))/(top_n*5);
 
-    let yearSlice = data.filter(d => d.index == index && !isNaN(d.value));
+    let labelSlice = data.filter(d => d.index == index && !isNaN(d.value));
         
     let x = d3.scaleLinear()
-      .domain([0, d3.max(yearSlice, d => d.value)])
+      .domain([0, d3.max(labelSlice, d => d.value)])
       .range([margin.left, width-margin.right-65]);
   
     let y = d3.scaleLinear()
@@ -884,7 +893,7 @@ function animate() {
       .classed('origin', d => d == 0);
 
     svg.selectAll('rect.bar')
-        .data(yearSlice, d => d.name)
+        .data(labelSlice, d => d.name)
         .enter()
         .append('rect')
         .attr('class', 'bar')
@@ -895,7 +904,7 @@ function animate() {
         .style('fill', d => d.colour);
 
     svg.selectAll('text.label')
-      .data(yearSlice, d => d.name)
+      .data(labelSlice, d => d.name)
       .enter()
       .append('text')
       .attr('class', 'label')
@@ -905,7 +914,7 @@ function animate() {
       .html(d => d.name);
 
     svg.selectAll('text.valueLabel')
-      .data(yearSlice, d => d.name)
+      .data(labelSlice, d => d.name)
       .enter()
       .append('text')
       .attr('class', 'valueLabel')
@@ -913,23 +922,23 @@ function animate() {
       .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
       .text(d => d3.format(',.0f')(d.lastValue));
 
-      var yearText;
+      var labelText;
       
-    yearText = svg.append('text')      
-      .attr('class', 'yearText')
+    labelText = svg.append('text')      
+      .attr('class', 'labelText')
       .attr('x', width-margin.right-20)
       .attr('y', height-25)
-      .attr("font-size", yearFontSize+"px")
+      .attr("font-size", labelFontSize+"px")
       .style('text-anchor', 'end')
-      .html(parseInt(yearSlice[0].year));
+      .html(labelSlice[0].label);
 
     let ticker = d3.interval(e => {
 
       if(animateState!=2 && animateState!=4) {
 
-      yearSlice = data.filter(d => d.index == index && !isNaN(d.value));
+      labelSlice = data.filter(d => d.index == index && !isNaN(d.value));
 
-      x.domain([0, d3.max(yearSlice, d => d.value)]); 
+      x.domain([0, d3.max(labelSlice, d => d.value)]); 
       
       svg.select('.xAxis')
         .transition()
@@ -937,7 +946,7 @@ function animate() {
         .ease(d3.easeLinear)
         .call(xAxis);
 
-      let bars = svg.selectAll('.bar').data(yearSlice, d => d.name);
+      let bars = svg.selectAll('.bar').data(labelSlice, d => d.name);
       
       bars
         .enter()
@@ -970,7 +979,7 @@ function animate() {
         .remove();
 
       let labels = svg.selectAll('.label')
-        .data(yearSlice, d => d.name);
+        .data(labelSlice, d => d.name);
       
       labels
         .enter()
@@ -1001,7 +1010,7 @@ function animate() {
             .attr('y', d => y(top_n+1)+5)
             .remove();         
       
-      let valueLabels = svg.selectAll('.valueLabel').data(yearSlice, d => d.name);
+      let valueLabels = svg.selectAll('.valueLabel').data(labelSlice, d => d.name);
 
       valueLabels
         .enter()
@@ -1037,7 +1046,7 @@ function animate() {
           .attr('y', d => y(top_n+1)+5)
           .remove();      
 
-      yearText.html(parseInt(yearSlice[0].year));
+      labelText.html(labelSlice[0].label);
     }
 
     if(animateState==1 && index == lastIndex)
@@ -1147,12 +1156,17 @@ function init() {
     document.documentElement.style.setProperty('--aspectRatio', aspectRatio);
 //    aspectRatio = getComputedStyle(document.documentElement).getPropertyValue('--aspectRatio');    
 
+  value=get('chartTitle');
+  if(value!=null) {
+      title=stripTags(value); 
+  } 
 	document.getElementById("title").innerHTML = title;
+  document.getElementById("chartTitle").value=title;
 	
   value=get('chartSubTitle');
   if(value!=null)  chartSubTitle=stripTags(value);    
   document.getElementById("toolChartSubTitle").innerHTML = chartSubTitle;
-//  document.getElementById("chartSubTitle").value=chartSubTitle;
+  document.getElementById("chartSubTitle").value=chartSubTitle;
 
   value=get('titleFontSize');
   if(value!=null) {
@@ -1161,26 +1175,26 @@ function init() {
   
   document.getElementById("toolChartSubTitle").style.fontSize = (parseInt(titleFontSize)*0.75).toString()+"vw"; 
 
-  value=get('yearFontSize');
+  value=get('labelFontSize');
   if(value!=null) {
-      if(parseInt(value) > 0)  yearFontSize=stripTags(value);  
+      if(parseInt(value) > 0)  labelFontSize=stripTags(value);  
   }
-//  document.getElementById("yearFontSize").value=yearFontSize; 
+  document.getElementById("labelFontSize").value=labelFontSize; 
 
   value=get('urlMusic');
   if(value!=null)  urlMusic=stripTags(value);    
   document.getElementById("audio").src = urlMusic; 
-//  document.getElementById("urlMusic").value=urlMusic; 
+  document.getElementById("urlMusic").value=urlMusic; 
 
   value=get('urlData');
   if(value!=null)  urlData=stripTags(value);
-//  document.getElementById("urlData").value=urlData;
+  document.getElementById("urlData").value=urlData;
 
   value=get('animationSpeed');
   if(value!=null) {
       if(parseInt(value) > 0)  animationSpeed=stripTags(value); 
   }
-//  document.getElementById("animationSpeed").value=animationSpeed;    
+  document.getElementById("animationSpeed").value=animationSpeed;    
 
 	flipCard(false);
 	setEmbedText();
