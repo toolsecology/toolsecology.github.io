@@ -783,12 +783,12 @@ function setEmbedText() {
     text='<div style="overflow: hidden; padding-top: '+(aspectRatio*100)+'%; position: relative;">';
       
     text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color)+
-        '?chartTitle='+encodeURIComponent(title)+
-        '?chartSubTitle='+encodeURIComponent(chartSubTitle)+
-        '?labelFontSize='+encodeURIComponent(labelFontSize)+
-        '?urlMusic='+encodeURIComponent(urlMusic)+
-        '?urlData='+encodeURIComponent(urlData)+
-        '?animationSpeed='+encodeURIComponent(animationSpeed)+
+        '&chartTitle='+encodeURIComponent(title)+
+        '&chartSubTitle='+encodeURIComponent(chartSubTitle)+
+        '&labelFontSize='+encodeURIComponent(labelFontSize)+
+        '&urlMusic='+encodeURIComponent(urlMusic)+
+        '&urlData='+encodeURIComponent(urlData)+
+        '&animationSpeed='+encodeURIComponent(animationSpeed)+
         '" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen></iframe></div>';
 
     document.getElementById("textEmbed").value = text;
