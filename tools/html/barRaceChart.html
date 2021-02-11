@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bar Race Chart</title>
+<meta name="copyright" content="Nicolas Joyeux" />
+	
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZMXJ1SP1R"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YZMXJ1SP1R');
+</script>
+<!-- End Google Analytics -->
+
+<style>
+* { 
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    box-sizing: border-box;
+}
+
+:root {   
+    --height: calc(100vw * var(--aspectRatio));
+    --toolBodyHeight: calc(var(--height) - 20vw);
+}
+
+body {
+    font-family: Arial;
+    background-color: rgba(255,255,255,0);
+    overflow-x: hidden;
+}
+
+.toolWindow {
+    width: 100vw;
+	height: var(--height); 
+	background-color: var(--frameColor);
+/*	
+    background-image: url("bubbles.jpg");
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-image: linear-gradient(to right,blue 0%,red 100%),url('bubbles.jpg');
+	background-position: center; 
+*/	
+    border-radius: 4vw;
+    text-align: center;
+    overflow: hidden;
+}
+
+.toolHeader {
+	width: 100vw;
+	height: 10vw;
+	padding: 1vw 0 1vw 0;
+}
+
+.toolHeaderTitle {
+	margin: auto;
+	width: 90vw;
+	line-height: 8vw;
+	height: 8vw;
+	color: white;
+	font-size: 8vw;
+/*	
+	background-color: lightgreen;
+	border-radius: 2vh;
+	box-shadow: 0 0 1vw 1vw rgba(0,0,0,0.6) inset;
+*/	
+}
+.toolBody {
+	width: 98vw;
+	height: var(--toolBodyHeight);
+	background-color: white;
+	margin: 0 1vw 0 1vw;
+	box-shadow: 2vw 0 1vw -1vw rgba(0,0,0,0.6) inset, -2vw 0 1vw -1vw rgba(0,0,0,0.6) inset;
+}
+
+.toolFlipCard {    
+	perspective: 100vw;
+}
+
+.toolFlipCardInner {
+    position: relative;
+    padding: 0;
+    width: 98vw;
+    height: var(--toolBodyHeight);
+    border: 0;
+    transition: transform 0.8s;
+	transform-style: preserve-3d;
+}
+
+.toolFlipCardFront {
+    padding: 2vw;
+    width: 98vw;
+    height: var(--toolBodyHeight);
+    border: 0;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    position: absolute;
+
+    display: flex; 
+    flex-direction: column;
+}
+
+.toolFlipCardBack {
+    padding: 2vw;
+    width: 98vw;
+    height: var(--toolBodyHeight);
+    border: 0;
+    position: absolute;
+    text-align: center;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    background-color: lightgray;
+    color: black;
+    transform: rotateY(180deg);
+}
+
+.toolRow {
+    display: flex;
+    height: 85%;
+}
+
+
+.toolchartTitle {
+    font-size:4vw;
+    max-height: 6vw;
+    min-height: 6vw;
+}
+
+.toolAnimation {
+    flex: 1;
+}
+
+.toolButtons {    
+    height: 14vw;
+}
+
+.toolButton {
+    font-size: 5vw;
+    margin: 2vw;
+    padding: 1vw;
+    border: 0.5vw solid var(--frameColor);
+    border-radius: 1vw;
+    background: var(--frameColor);
+    color: white;
+}
+
+.toolButton:hover {
+    cursor:pointer;
+    background: white;
+    color: var(--frameColor);
+}
+
+.toolButtonImage {
+    height: 4vw;
+    color: white;
+}
+
+.toolFooter {
+	width: 100vw;
+	height: 10vw;
+}
+
+.toolFooterContainer {
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    height: 10vw;
+}
+
+.toolFooterButton:hover {
+    transform: scale(1.1);
+}
+
+.toolFooterRow {
+    display: flex;
+    height: 85%;
+}
+
+.toolFooterText {
+	font-size: 2.5vw;
+	color: white;
+}
+
+.toolEmbedText {
+    font-size: 3vw;
+}
+
+.toolEmbedColor {
+	height:3vw;
+	width:6vw;
+}
+
+.toolEmbedRadio {
+    height:2vw;
+    width:2vw;
+}
+
+.toolEmbedInput {
+    margin: 1vw;
+    padding: 1vw;
+    font-size: 3vw;
+    border-radius: 1vw;
+    border: 0.5vw solid var(--frameColor);
+}
+
+.toolEmbedTextarea {
+    margin: 1vw;
+    padding: 1vw;
+    font-size: 3vw;
+    border-radius: 1vw;
+    border: 0.5vw solid var(--frameColor);
+}
+
+.toolEmbedButton {
+    font-size: 3vw;
+    margin: 1vw;
+    padding: 1vw;
+    border: 0.5vw solid var(--frameColor);
+    border-radius: 1vw;
+    background: var(--frameColor);
+    color: white;
+}
+
+.toolEmbedButton:hover {
+    cursor:pointer;
+    background: white;
+    color: var(--frameColor);
+}
+
+.column1 {flex: 8.333%;}
+.column2 {flex: 16.666%;}
+.column3 {flex: 25%;}
+.column4 {flex: 33.333%;}
+.column5 {flex: 41.666%;}
+.column6 {flex: 50%;}
+.column7 {flex: 58.333%;}
+.column8 {flex: 66.666%;}
+.column9 {flex: 75%;}
+.column10 {flex: 83.333%;}
+.column11 {flex: 91.666%;}
+.column12 {flex: 100%;}
+
+.width1 {width: 8.333%;}
+.width2 {width: 16.666%;}
+.width3 {width: 25%;}
+.width4 {width: 33.333%;}
+.width5 {width: 41.666%;}
+.width6 {width: 50%;}
+.width7 {width: 58.333%;}
+.width8 {width: 66.666%;}
+.width9 {width: 75%;}
+.width10 {width: 83.333%;}
+.width11 {width: 91.666%;}
+.width12 {width: 100%;}
+
+.center {
+    text-align: center;
+}
+
+.centerVertical {
+    align-self: center;
+}
+
+
+.resp-sharing-button {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  margin: 0.05em;
+  border-radius: 0.5em;
+  transition: 25ms ease-out;
+  padding: 0.5em 0.75em;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  fill: #fff;
+  stroke: none;
+}
+
+.resp-sharing-button svg {
+  width: 1.8em;
+  height: 1.8em;
+  margin: 0;
+  vertical-align: middle;
+}
+
+
+.resp-sharing-button--facebook {
+  background-color: #3b5998;
+  border-color: #3b5998;
+}
+
+.resp-sharing-button--facebook:hover,
+.resp-sharing-button--facebook:active {
+  background-color: #2d4373;
+  border-color: #2d4373;
+}
+
+.resp-sharing-button--twitter {
+  background-color: #55acee;
+  border-color: #55acee;
+}
+
+.resp-sharing-button--twitter:hover,
+.resp-sharing-button--twitter:active {
+  background-color: #2795e9;
+  border-color: #2795e9;
+}
+
+.resp-sharing-button--tumblr {
+  background-color: #35465C;
+  border-color: #35465C;
+}
+
+.resp-sharing-button--tumblr:hover,
+.resp-sharing-button--tumblr:active {
+  background-color: #222d3c;
+  border-color: #222d3c;
+}
+
+.resp-sharing-button--email {
+  background-color: #777777;
+  border-color: #777777;
+}
+
+.resp-sharing-button--email:hover,
+.resp-sharing-button--email:active {
+  background-color: #5e5e5e;
+  border-color: #5e5e5e;
+}
+
+.resp-sharing-button--pinterest {
+  background-color: #bd081c;
+  border-color: #bd081c;
+}
+
+.resp-sharing-button--pinterest:hover,
+.resp-sharing-button--pinterest:active {
+  background-color: #8c0615;
+  border-color: #8c0615;
+}
+
+.resp-sharing-button--linkedin {
+  background-color: #0077b5;
+  border-color: #0077b5;
+}
+
+.resp-sharing-button--linkedin:hover,
+.resp-sharing-button--linkedin:active {
+  background-color: #046293;
+  border-color: #046293;
+}
+
+.resp-sharing-button--reddit {
+  background-color: #5f99cf;
+  border-color: #5f99cf;
+}
+
+.resp-sharing-button--reddit:hover,
+.resp-sharing-button--reddit:active {
+  background-color: #3a80c1;
+  border-color: #3a80c1;
+}
+
+.resp-sharing-button--xing {
+  background-color: #1a7576;
+  border-color: #1a7576;
+}
+
+.resp-sharing-button--xing:hover,
+.resp-sharing-button--xing:active {
+  background-color:#114C4C;
+  border-color: #114C4C;
+}
+
+.resp-sharing-button--whatsapp {
+  background-color: #25D366;
+  border-color: #25D366;
+}
+
+.resp-sharing-button--whatsapp:hover,
+.resp-sharing-button--whatsapp:active {
+  background-color: #1DA851;
+  border-color: #1DA851;
+}
+
+.resp-sharing-button--hackernews {
+  background-color: #ff6600;
+  border-color: #FF6600;
+}
+
+.resp-sharing-button--hackernews:hover,
+.resp-sharing-button--hackernews:active {
+  background-color:#d35400;
+  border-color: #d35400;
+}
+
+.resp-sharing-button--vk {
+  background-color: #507299;
+  border-color: #507299;
+}
+
+.resp-sharing-button--vk:hover,
+.resp-sharing-button--vk:active {
+  background-color: #43648c;
+  border-color: #43648c;
+}
+
+.resp-sharing-button--telegram {
+  background-color: #54A9EB;
+  border-color: #54A9EB;
+}
+
+.resp-sharing-button--telegram:hover,
+.resp-sharing-button--telegram:active {
+  background-color: #4B97D1;
+  border-color: #4B97D1;
+}
+
+.debug {
+    background-color: yellow;
+}
+
+</style>
+</head>
+<body>
+
+<div class="toolWindow" id="window">
+<div class="toolHeader">
+	<div class="toolHeaderTitle" id="title">	
+	</div>
+</div>
+
+<div class="toolBody">   
+	<div id="flipCard" class="toolFlipCard">
+		<div id="flipCardInner" class="toolFlipCardInner">
+			<div class="toolFlipCardFront">
+
+        <div id="toolChartSubTitle" class="toolchartTitle">            
+        </div>
+        
+
+        <div id="animation" class="toolAnimation"></div>
+
+        <div class="toolButtons">
+          <button class="toolButton" onclick="restart()">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+              xml:space="preserve" class="toolButtonImage" viewBox="0 0 512 512" x="0px" y="0px" id="svg-3e0f"
+              style="enable-background:new 0 0 512 512;">
+              <path style="fill:#77DD00;"
+                d="M403.721,272.047c0,39.891-15.598,77.684-44.09,105.878c-28.195,28.494-65.987,44.092-105.88,44.092  s-77.686-15.598-105.88-44.092c-28.493-28.194-44.09-65.987-44.09-105.878c0-39.893,15.598-77.686,44.09-105.88  c28.194-28.494,65.987-44.09,105.88-44.09c25.196,0,49.789,6.298,71.987,18.596l-58.79,71.386h231.255L440.613,0l-57.588,70.185  C344.333,45.291,299.94,32.094,253.75,32.094c-64.187,0-124.477,24.894-169.766,70.185c-45.292,45.291-70.187,105.58-70.187,169.768  s24.895,124.475,70.187,169.766C129.274,487.105,189.562,512,253.75,512s124.476-24.895,169.766-70.187  c45.291-45.291,70.187-105.578,70.187-169.766V257.05h-89.982V272.047z">
+              </path>
+              <g>
+                <path style="fill:#66BB00;"
+                  d="M403.721,257.05h89.982v14.997c0,64.187-24.896,124.475-70.187,169.766   C378.226,487.105,317.938,512,253.75,512v-89.982c39.893,0,77.686-15.598,105.88-44.092c28.493-28.194,44.09-65.987,44.09-105.878   V257.05z">
+                </path>
+                <path style="fill:#66BB00;"
+                  d="M325.736,140.673c-22.198-12.299-46.791-18.596-71.987-18.596V32.094   c46.19,0,90.583,13.197,129.275,38.092L440.613,0l57.59,212.059H266.948L325.736,140.673z">
+                </path>
+              </g>
+            </svg>
+            Restart
+          </button>
+          <button id="playButton" class="toolButton" onclick="playPause()">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+              xml:space="preserve" class="toolButtonImage" viewBox="0 0 512 512" x="0px" y="0px" id="svg-4ba3"
+              style="enable-background:new 0 0 512 512;">
+              <path style="fill:#61DE56;"
+                d="M437.02,74.98C388.667,26.628,324.38,0,256,0C187.619,0,123.332,26.628,74.98,74.98  C26.629,123.331,0,187.619,0,256c0,68.38,26.629,132.667,74.98,181.019C123.332,485.371,187.619,512,256,512  c68.379,0,132.666-26.629,181.02-74.981C485.371,388.667,512,324.38,512,256C512,187.619,485.371,123.331,437.02,74.98z">
+              </path>
+              <path style="fill:#13C37B;"
+                d="M437.02,74.981C388.666,26.629,324.379,0,256,0h-0.001v512H256c68.38,0,132.667-26.628,181.02-74.979  C485.371,388.668,512,324.381,512,256C512,187.62,485.371,123.333,437.02,74.981z">
+              </path>
+              <path style="fill:#F2F2F2;"
+                d="M392.033,243.01L199.232,131.697c-4.642-2.68-10.359-2.68-15,0s-7.5,7.631-7.5,12.99v222.621  c0,5.359,2.859,10.311,7.5,12.99c2.32,1.34,4.91,2.01,7.5,2.01s5.18-0.67,7.5-2.01L392.033,268.99c4.641-2.679,7.5-7.631,7.5-12.99  C399.533,250.641,396.674,245.69,392.033,243.01z">
+              </path>
+              <path style="fill:#D9D9D9;"
+                d="M392.033,243.01l-136.032-78.537v183.052l136.032-78.534c4.641-2.679,7.5-7.631,7.5-12.99  C399.533,250.641,396.674,245.69,392.033,243.01z">
+              </path>
+            </svg>
+            Play
+          </button>
+          <button id="pauseButton" class="toolButton" onclick="playPause()">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+              xml:space="preserve" class="toolButtonImage" viewBox="0 0 464 464" id="svg-3d20">
+              <path
+                d="m464 232c0 128.128906-103.871094 232-232 232s-232-103.871094-232-232 103.871094-232 232-232 232 103.871094 232 232zm0 0"
+                fill="#ab2300"></path>
+              <g fill="#f1f2f2">
+                <path d="m160 136h48v192h-48zm0 0"></path>
+                <path d="m256 136h48v192h-48zm0 0"></path>
+              </g>
+            </svg>
+            Pause
+          </button>
+          <button id="muteButton" class="toolButton" onclick="muteUnmute()">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+              xml:space="preserve" class="toolButtonImage" viewBox="0 0 512 512" x="0px" y="0px" id="svg-d9c6"
+              style="enable-background:new 0 0 512 512;">
+              <circle style="fill:#FFD400;" cx="256" cy="256" r="256"></circle>
+              <path style="fill:#FF9F00;"
+                d="M511.686,268.679L406.033,163.026l-6.712,4.529L308.32,75L75,330.097l181.891,181.891  C393.617,511.521,505.091,403.879,511.686,268.679z">
+              </path>
+              <polygon style="fill:#444444;"
+                points="203.114,229.628 201.629,256.142 199.72,292.412 166.985,330.097 75,330.097 75,181.904   166.773,181.904 166.985,181.691 ">
+              </polygon>
+              <polygon style="fill:#292929;" points="201.629,256.142 199.72,292.412 166.985,330.097 75,330.097 75,256.142 ">
+              </polygon>
+              <g>
+                <path style="fill:#00ABE9;"
+                  d="M352.156,256.142c0,13.575-4.03,27.149-11.878,38.815l-17.816-11.666   c5.515-8.271,8.273-17.816,8.273-27.149c0-9.333-2.758-18.878-8.273-27.151l17.816-11.666   C348.126,228.991,352.156,242.567,352.156,256.142z">
+                </path>
+                <path style="fill:#00ABE9;"
+                  d="M437,256.142c0,29.907-8.908,59.815-26.301,85.904l-4.666,7.212l-17.605-11.879l4.666-6.999   c15.06-22.484,22.696-48.362,22.696-74.238c0-25.878-7.636-51.755-22.696-74.238l-4.666-7l17.605-11.878l4.666,7.212   C428.092,196.327,437,226.234,437,256.142z">
+                </path>
+                <path style="fill:#00ABE9;"
+                  d="M394.367,256.142c0,21.634-6.152,43.27-18.878,62.36l-4.667,7.211l-17.816-11.878l4.878-6.999   c10.181-15.485,15.273-33.09,15.273-50.694c0-17.605-5.092-35.211-15.273-50.694l-4.878-7l17.816-11.878l4.667,7.212   C388.215,212.871,394.367,234.506,394.367,256.142z">
+                </path>
+              </g>
+              <polygon style="fill:#5A5A5A;" points="308.32,75 308.32,437 166.985,330.097 166.985,181.691 "></polygon>
+              <polygon style="fill:#444444;" points="166.985,256.142 308.32,256.142 308.32,437 166.985,330.097 "></polygon>
+              <g>
+                <path style="fill:#0095FF;"
+                  d="M330.734,256.142h21.422c0,13.575-4.03,27.149-11.878,38.815l-17.816-11.666   C327.977,275.02,330.734,265.475,330.734,256.142z">
+                </path>
+                <path style="fill:#0095FF;"
+                  d="M394.367,256.142c0,21.634-6.152,43.27-18.878,62.36l-4.667,7.211l-17.816-11.878l4.878-6.999   c10.181-15.485,15.273-33.09,15.273-50.694L394.367,256.142L394.367,256.142z">
+                </path>
+                <path style="fill:#0095FF;"
+                  d="M437,256.142c0,29.907-8.908,59.815-26.301,85.904l-4.666,7.212l-17.605-11.879l4.666-6.999   c15.06-22.484,22.696-48.362,22.696-74.238H437z">
+                </path>
+              </g>
+            </svg>
+            Mute
+          </button>
+          <button id="unmuteButton" class="toolButton" onclick="muteUnmute()">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+              xml:space="preserve" class="toolButtonImage" viewBox="0 0 512 512" x="0px" y="0px" id="svg-4282"
+              style="enable-background:new 0 0 512 512;">
+              <circle style="fill:#FFD400;" cx="256" cy="256" r="256"></circle>
+              <path style="fill:#FF9F00;"
+                d="M511.244,275.803L310.441,75L75,330.804l181.193,181.193  C390.827,511.898,501.14,407.87,511.244,275.803z">
+              </path>
+              <polygon style="fill:#444444;"
+                points="205.235,230.335 203.75,256.849 201.842,293.119 169.106,330.804 75,330.804 75,182.611   168.894,182.611 169.106,182.398 ">
+              </polygon>
+              <polygon style="fill:#292929;" points="203.75,256.849 201.842,293.119 169.106,330.804 75,330.804 75,256.849 ">
+              </polygon>
+              <polygon style="fill:#5A5A5A;" points="310.441,75 310.441,437 169.106,330.804 169.106,182.398 "></polygon>
+              <polygon style="fill:#FF3636;"
+                points="402.215,256.849 437,291.846 422.153,306.694 387.155,271.908 352.156,306.694   337.31,291.846 372.095,256.849 337.31,221.85 352.156,207.003 387.155,241.789 422.153,207.003 437,221.85 ">
+              </polygon>
+              <polygon style="fill:#444444;" points="169.106,256.849 310.441,256.849 310.441,437 169.106,330.804 "></polygon>
+              <polygon style="fill:#F40000;"
+                points="437,291.846 422.153,306.694 387.155,271.908 352.156,306.694 337.31,291.846   372.095,256.849 402.215,256.849 ">
+              </polygon>
+            </svg>
+            Unmute
+          </button>
+        </div>
+      </div>
+      
+      <audio id="audio">       
+        <source type="audio/mpeg">      
+      </audio> 
+
+			<div class="toolFlipCardBack toolEmbedText">
+        <span>Share: </span>
+        <!-- Sharingbutton Facebook -->
+        <a id="resp-sharing-button--facebook" class="resp-sharing-button resp-sharing-button--facebook" href="" target="_blank" rel="noopener nofollow" aria-label="Facebook">    
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton Twitter -->
+        <a id="resp-sharing-button--twitter" class="resp-sharing-button resp-sharing-button--twitter" href="" target="_blank" rel="noopener nofollow" aria-label="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton Tumblr -->
+        <a id="resp-sharing-button--tumblr" class="resp-sharing-button resp-sharing-button--tumblr" href="" target="_blank" rel="noopener nofollow" aria-label="Tumblr">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.5.5v5h5v4h-5V15c0 5 3.5 4.4 6 2.8v4.4c-6.7 3.2-12 0-12-4.2V9.5h-3V6.7c1-.3 2.2-.7 3-1.3.5-.5 1-1.2 1.4-2 .3-.7.6-1.7.7-3h3.8z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton E-Mail -->
+        <a id="resp-sharing-button--email" class="resp-sharing-button resp-sharing-button--email" href="" target="_self" rel="noopener nofollow" aria-label="E-Mail">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22 4H2C.9 4 0 4.9 0 6v12c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7.25 14.43l-3.5 2c-.08.05-.17.07-.25.07-.17 0-.34-.1-.43-.25-.14-.24-.06-.55.18-.68l3.5-2c.24-.14.55-.06.68.18.14.24.06.55-.18.68zm4.75.07c-.1 0-.2-.03-.27-.08l-8.5-5.5c-.23-.15-.3-.46-.15-.7.15-.22.46-.3.7-.14L12 13.4l8.23-5.32c.23-.15.54-.08.7.15.14.23.07.54-.16.7l-8.5 5.5c-.08.04-.17.07-.27.07zm8.93 1.75c-.1.16-.26.25-.43.25-.08 0-.17-.02-.25-.07l-3.5-2c-.24-.13-.32-.44-.18-.68s.44-.32.68-.18l3.5 2c.24.13.32.44.18.68z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton Pinterest -->
+        <a id="resp-sharing-button--pinterest" class="resp-sharing-button resp-sharing-button--pinterest" href="" target="_blank" rel="noopener nofollow" aria-label="Pinterest">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.14.5C5.86.5 2.7 5 2.7 8.75c0 2.27.86 4.3 2.7 5.05.3.12.57 0 .66-.33l.27-1.06c.1-.32.06-.44-.2-.73-.52-.62-.86-1.44-.86-2.6 0-3.33 2.5-6.32 6.5-6.32 3.55 0 5.5 2.17 5.5 5.07 0 3.8-1.7 7.02-4.2 7.02-1.37 0-2.4-1.14-2.07-2.54.4-1.68 1.16-3.48 1.16-4.7 0-1.07-.58-1.98-1.78-1.98-1.4 0-2.55 1.47-2.55 3.42 0 1.25.43 2.1.43 2.1l-1.7 7.2c-.5 2.13-.08 4.75-.04 5 .02.17.22.2.3.1.14-.18 1.82-2.26 2.4-4.33.16-.58.93-3.63.93-3.63.45.88 1.8 1.65 3.22 1.65 4.25 0 7.13-3.87 7.13-9.05C20.5 4.15 17.18.5 12.14.5z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton LinkedIn -->
+        <a id="resp-sharing-button--linkedin" class="resp-sharing-button resp-sharing-button--linkedin" href="" target="_blank" rel="noopener nofollow" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.5 21.5h-5v-13h5v13zM4 6.5C2.5 6.5 1.5 5.3 1.5 4s1-2.4 2.5-2.4c1.6 0 2.5 1 2.6 2.5 0 1.4-1 2.5-2.6 2.5zm11.5 6c-1 0-2 1-2 2v7h-5v-13h5V10s1.6-1.5 4-1.5c3 0 5 2.2 5 6.3v6.7h-5v-7c0-1-1-2-2-2z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton Reddit -->
+        <a id="resp-sharing-button--reddit" class="resp-sharing-button resp-sharing-button--reddit" href="" target="_blank" rel="noopener nofollow" aria-label="Reddit">    
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 11.5c0-1.65-1.35-3-3-3-.96 0-1.86.48-2.42 1.24-1.64-1-3.75-1.64-6.07-1.72.08-1.1.4-3.05 1.52-3.7.72-.4 1.73-.24 3 .5C17.2 6.3 18.46 7.5 20 7.5c1.65 0 3-1.35 3-3s-1.35-3-3-3c-1.38 0-2.54.94-2.88 2.22-1.43-.72-2.64-.8-3.6-.25-1.64.94-1.95 3.47-2 4.55-2.33.08-4.45.7-6.1 1.72C4.86 8.98 3.96 8.5 3 8.5c-1.65 0-3 1.35-3 3 0 1.32.84 2.44 2.05 2.84-.03.22-.05.44-.05.66 0 3.86 4.5 7 10 7s10-3.14 10-7c0-.22-.02-.44-.05-.66 1.2-.4 2.05-1.54 2.05-2.84zM2.3 13.37C1.5 13.07 1 12.35 1 11.5c0-1.1.9-2 2-2 .64 0 1.22.32 1.6.82-1.1.85-1.92 1.9-2.3 3.05zm3.7.13c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9.8 4.8c-1.08.63-2.42.96-3.8.96-1.4 0-2.74-.34-3.8-.95-.24-.13-.32-.44-.2-.68.15-.24.46-.32.7-.18 1.83 1.06 4.76 1.06 6.6 0 .23-.13.53-.05.67.2.14.23.06.54-.18.67zm.2-2.8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.7-2.13c-.38-1.16-1.2-2.2-2.3-3.05.38-.5.97-.82 1.6-.82 1.1 0 2 .9 2 2 0 .84-.53 1.57-1.3 1.87z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton XING -->
+        <a id="resp-sharing-button--xing" class="resp-sharing-button resp-sharing-button--xing" href="" target="_blank" rel="noopener nofollow" aria-label="XING">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.2 9.7l-3-5.4C7.2 4 7 4 6.8 4h-5c-.3 0-.4 0-.5.2v.5L4 10 .4 16v.5c0 .2.2.3.4.3h5c.3 0 .4 0 .5-.2l4-6.6v-.5zM24 .2l-.5-.2H18s-.2 0-.3.3l-8 14v.4l5.2 9c0 .2 0 .3.3.3h5.4s.3 0 .4-.2c.2-.2.2-.4 0-.5l-5-8.8L24 .7V.2z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton WhatsApp -->
+        <a id="resp-sharing-button--whatsapp" class="resp-sharing-button resp-sharing-button--whatsapp" href="" target="_blank" rel="noopener nofollow" aria-label="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.1 3.9C17.9 1.7 15 .5 12 .5 5.8.5.7 5.6.7 11.9c0 2 .5 3.9 1.5 5.6L.6 23.4l6-1.6c1.6.9 3.5 1.3 5.4 1.3 6.3 0 11.4-5.1 11.4-11.4-.1-2.8-1.2-5.7-3.3-7.8zM12 21.4c-1.7 0-3.3-.5-4.8-1.3l-.4-.2-3.5 1 1-3.4L4 17c-1-1.5-1.4-3.2-1.4-5.1 0-5.2 4.2-9.4 9.4-9.4 2.5 0 4.9 1 6.7 2.8 1.8 1.8 2.8 4.2 2.8 6.7-.1 5.2-4.3 9.4-9.5 9.4zm5.1-7.1c-.3-.1-1.7-.9-1.9-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1s-1.2-.5-2.3-1.4c-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6s.3-.3.4-.5c.2-.1.3-.3.4-.5.1-.2 0-.4 0-.5C10 9 9.3 7.6 9 7c-.1-.4-.4-.3-.5-.3h-.6s-.4.1-.7.3c-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.3-.3-.4-.6-.5z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton Hacker News -->
+        <a id="resp-sharing-button--hackernews" class="resp-sharing-button resp-sharing-button--hackernews" href="" target="_blank" rel="noopener nofollow" aria-label="Hacker News">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><path fill-rule="evenodd" d="M60.94 82.314L17 0h20.08l25.85 52.093c.397.927.86 1.888 1.39 2.883.53.994.995 2.02 1.393 3.08.265.4.463.764.596 1.095.13.334.262.63.395.898.662 1.325 1.26 2.618 1.79 3.877.53 1.26.993 2.42 1.39 3.48 1.06-2.254 2.22-4.673 3.48-7.258 1.26-2.585 2.552-5.27 3.877-8.052L103.49 0h18.69L77.84 83.308v53.087h-16.9v-54.08z"></path></svg>
+        </a>
+        
+        <!-- Sharingbutton VK -->
+        <a id="resp-sharing-button--vk" class="resp-sharing-button resp-sharing-button--vk" href="" target="_blank" rel="noopener nofollow" aria-label="VK">    
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.547 7h-3.29a.743.743 0 0 0-.655.392s-1.312 2.416-1.734 3.23C14.734 12.813 14 12.126 14 11.11V7.603A1.104 1.104 0 0 0 12.896 6.5h-2.474a1.982 1.982 0 0 0-1.75.813s1.255-.204 1.255 1.49c0 .42.022 1.626.04 2.64a.73.73 0 0 1-1.272.503 21.54 21.54 0 0 1-2.498-4.543.693.693 0 0 0-.63-.403h-2.99a.508.508 0 0 0-.48.685C3.005 10.175 6.918 18 11.38 18h1.878a.742.742 0 0 0 .742-.742v-1.135a.73.73 0 0 1 1.23-.53l2.247 2.112a1.09 1.09 0 0 0 .746.295h2.953c1.424 0 1.424-.988.647-1.753-.546-.538-2.518-2.617-2.518-2.617a1.02 1.02 0 0 1-.078-1.323c.637-.84 1.68-2.212 2.122-2.8.603-.804 1.697-2.507.197-2.507z"/></svg>
+        </a>
+        
+        <!-- Sharingbutton Telegram -->
+        <a id="resp-sharing-button--telegram" class="resp-sharing-button resp-sharing-button--telegram" href="" target="_blank" rel="noopener nofollow" aria-label="Telegram">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M.707 8.475C.275 8.64 0 9.508 0 9.508s.284.867.718 1.03l5.09 1.897 1.986 6.38a1.102 1.102 0 0 0 1.75.527l2.96-2.41a.405.405 0 0 1 .494-.013l5.34 3.87a1.1 1.1 0 0 0 1.046.135 1.1 1.1 0 0 0 .682-.803l3.91-18.795A1.102 1.102 0 0 0 22.5.075L.706 8.475z"/></svg>
+        </a>  
+        </br></br>
+
+        <p>Embed: 
+                <a href="" onClick="window.open(urlHowtoEmbed, '_blank')">(How do I embed a tool in my website?)</a>
+            </p>
+<!--           
+            <label for="chartSubTitle">Chart Subtitle:</label>
+            <input type="text" id="chartSubTitle" class="toolEmbedInput" size="24" onchange="setEmbedText()">
+            </br>            
+            <label for="yearFontSize">Year Font Size:</label>
+            <input type="text" id="yearFontSize" class="toolEmbedInput" size="8" onchange="setEmbedText()"> Pixels
+            </br>
+            <label for="urlMusic">URL of Music:</label>
+            <input type="text" id="urlMusic" class="toolEmbedInput" size="24" onchange="setEmbedText()">
+            </br>
+            <label for="urlData">URL of Data:</label>
+            <input type="text" id="urlData" class="toolEmbedInput" size="24" onchange="setEmbedText()">
+            </br>
+            <label for="animationSpeed">Animation Tick Duration:</label>
+            <input type="text" id="animationSpeed" class="toolEmbedInput" size="8" onchange="setEmbedText()"> ms
+            </br>
+-->
+
+          </br>
+				<label for="frameColor">Frame Color: </label> <input type="color" class="toolEmbedColor" id="frameColor" value="#00008b" onchange="setEmbedText()">
+				
+				</br>
+				<textarea id="textEmbed" class="toolEmbedTextarea" rows="3" cols="40"></textarea>
+				</br>
+				<button class="toolEmbedButton" onclick="copyClipboard()">Copy to clipboard</button>								
+			</div>
+		</div>
+    </div>
+</div>
+
+
+<div class="toolFooter">
+	<div class="toolFooterContainer">
+		<div class="toolFooterButton width4" onclick="window.open(urlMoreInfo, '_blank')" style="cursor:pointer;">
+			<div class="toolFooterRow">                
+				<div class="column3 centerVertical">
+					<img src="/tools/plus.png" alt="Plus" style="width:100%;">
+				</div>          
+				<div class="column9 centerVertical toolFooterText">                   
+					Create your own bar race chart
+				</div>                   
+			</div>
+		</div>
+		
+		<div class="toolFooterButton width4" onclick="window.open(urlFreeTools, '_blank')" style="cursor:pointer;">		
+			<div class="toolFooterRow">
+				<div class="column3 centerVertical"> 
+					<img src="/tools/logoSmall.png" alt="Logo" style="width:100%;">
+				</div>
+				<div class="column9 centerVertical toolFooterText">                       
+					Get free tools from ToolsEcology.com
+				</div>
+			</div>     	
+		</div>
+
+		<div class="toolFooterButton width4" onclick="flipCard(true)" style="cursor:pointer;">
+			<div class="toolFooterRow"> 
+				<div class="column3 centerVertical"> 
+					<img src="/tools/embed.png" alt="Embed" style="width:100%;">
+				</div>
+				<div id="embedMessage" class="column9 centerVertical toolFooterText">                                                
+				</div>
+			</div>         
+		</div>
+	</div>
+</div>
+</div>
+
+<script>
+
+const title="Top Global Brands";
+var frameColor="rgba(0, 0, 139, 1)";
+const aspectRatio=1.2;
+const urlSite="//www.toolsecology.com/";
+const urlTool = urlSite+"tools/"+"raceChart.html";
+const urlMoreInfo = urlSite+"Free-Tools.html";
+const urlFreeTools = urlSite+"Free-Tools.html";
+const urlHowtoEmbed = urlSite+"How-to-Embed.html";
+const mimimumX=480;
+const urlShare = "https:"+urlTool;
+const textShare="Hey! Check this Awesome Tool!";
+
+var frameColor="rgba(0, 0, 139, 1)";
+var chartSubTitle="(Brand value, Thousand $)";
+var titleFontSize="4";
+var yearFontSize="80";
+var urlMusic="../music/bensound-epic.mp3";
+var urlData="../data/brand_values.csv";
+var animationSpeed="500";
+
+var animateState=0;  // 0=Stop, 1=Run, 2=Pause, 3=Restart, 4=Finished
+
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}
+
+function copyClipboard() {
+    var copyText = document.getElementById("textEmbed");
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    document.execCommand("copy");
+}
+
+function stripTags(str) {
+    return str.replace(/(<([^>]+)>)/gi, "");
+}
+
+var cardSide=0;
+function flipCard(flip) {
+    if(flip) {
+        if(cardSide==0) {            
+            document.getElementById("flipCardInner").style.transform = "rotateY(-180deg)";
+            cardSide=1;
+        }
+        else {            
+            document.getElementById("flipCardInner").style.transform = "rotateY(0deg)";
+            cardSide=0;
+        }
+	}
+
+    if(cardSide==0) {
+		document.getElementById("embedMessage").innerHTML = "Share / Embed this tool";    
+    }
+    else {
+        document.getElementById("embedMessage").innerHTML = "Go back to the tool";  
+    }
+}
+
+function setEmbedText() {
+    var color = document.getElementById("frameColor");
+    var sizeSmall = document.getElementById("toolSmall");
+    var sizeMedium = document.getElementById("toolMedium");
+    var sizeLarge = document.getElementById("toolLarge");
+	  var text;
+	
+    text='<div style="overflow: hidden; padding-top: 80%; position: relative;">';
+      
+    text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color.value)+
+        '" title="'+title+'" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen></iframe></div>';
+
+    document.getElementById("textEmbed").value = text;
+
+    // share buttons
+    document.getElementById("resp-sharing-button--facebook").href = "https://facebook.com/sharer/sharer.php?u="+encodeURIComponent(urlShare);
+    document.getElementById("resp-sharing-button--twitter").href = "https://twitter.com/intent/tweet/?text="+encodeURIComponent(textShare)+"&url="+encodeURIComponent(urlShare);
+    document.getElementById("resp-sharing-button--tumblr").href = "https://www.tumblr.com/widgets/share/tool?posttype=link&title="+encodeURIComponent(textShare)+"&caption="+encodeURIComponent(textShare)+"&content="+encodeURIComponent(urlShare)+"&canonicalUrl="+encodeURIComponent(urlShare)+"&shareSource=tumblr_share_button";
+    document.getElementById("resp-sharing-button--email").href = "mailto:?subject="+encodeURIComponent(textShare)+"&body="+encodeURIComponent(urlShare);
+    document.getElementById("resp-sharing-button--pinterest").href = "https://pinterest.com/pin/create/button/?url="+encodeURIComponent(urlShare)+"&media="+encodeURIComponent(urlShare)+"&description="+encodeURIComponent(textShare);
+    document.getElementById("resp-sharing-button--linkedin").href = "https://www.linkedin.com/shareArticle?mini=true&url="+encodeURIComponent(urlShare)+"&title="+encodeURIComponent(textShare)+"&summary="+encodeURIComponent(textShare)+"&source="+encodeURIComponent(urlShare);
+    document.getElementById("resp-sharing-button--reddit").href = "https://reddit.com/submit/?url="+encodeURIComponent(urlShare)+"&resubmit=true&title="+encodeURIComponent(textShare);
+    document.getElementById("resp-sharing-button--xing").href = "https://www.xing.com/app/user?op=share;url="+encodeURIComponent(urlShare)+";title="+encodeURIComponent(textShare);
+    document.getElementById("resp-sharing-button--whatsapp").href = "whatsapp://send?text="+encodeURIComponent(textShare)+" "+encodeURIComponent(urlShare);
+    document.getElementById("resp-sharing-button--hackernews").href = "https://news.ycombinator.com/submitlink?u="+encodeURIComponent(urlShare)+"&t="+encodeURIComponent(textShare);
+    document.getElementById("resp-sharing-button--vk").href = "http://vk.com/share.php?title="+encodeURIComponent(textShare)+"&url="+encodeURIComponent(urlShare);
+    document.getElementById("resp-sharing-button--telegram").href = "https://telegram.me/share/url?text="+encodeURIComponent(textShare)+"&url="+encodeURIComponent(urlShare);
+}
+
+function toggleFullscreen() {
+    let elem=document.getElementsByTagName("html")[0];        
+
+    if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        }
+    }
+}
+</script>
+
+<script src="../javascript/d3.min.js"></script>
+
+<script>
+
+function animate() {
+    var tickDuration = parseInt(animationSpeed);
+
+//    var height2 = document.getElementById("animation").offsetHeight;
+//    var width2 = document.getElementById("animation").offsetWidth;
+    
+    var width = 600;
+    var height = 500;
+
+    var svg = d3.select("#animation").append("svg")
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", "0 0 "+width+" "+height);
+
+    const margin = {
+      top: 15,
+      right: 5,
+      bottom: 0,
+      left: 5
+    };
+    
+    d3.csv(urlData).then(function(data) {       
+      data.forEach(d => {       
+        d.rank = (+d.rank)-1,
+        d.lastValue = +d.lastValue,
+        d.value = +d.value,
+        d.index = +d.index,
+        d.value = isNaN(d.value) ? 0 : d.value,
+        d.colour = d3.hsl(Math.random()*360,0.75,0.75)
+    });
+    
+    let index = 0;
+    let lastIndex = d3.max(data, d => d.index);
+
+    var top_n = d3.max(data, d => d.rank)+1;    
+    let barPadding = (height-(margin.bottom+margin.top))/(top_n*5);
+
+    let yearSlice = data.filter(d => d.index == index && !isNaN(d.value));
+        
+    let x = d3.scaleLinear()
+      .domain([0, d3.max(yearSlice, d => d.value)])
+      .range([margin.left, width-margin.right-65]);
+  
+    let y = d3.scaleLinear()
+      .domain([top_n, 0])
+      .range([height-margin.bottom, margin.top]);
+
+    let xAxis = d3.axisTop()
+      .scale(x)
+      .ticks(width > 500 ? 5:2)
+      .tickSize(-(height-margin.top-margin.bottom))
+      .tickFormat(d => d3.format(',')(d));      
+
+    // x axis
+    svg.append('g')
+      .attr('class', 'axis xAxis')
+      .attr('transform', 'translate(0, '+margin.top+')')
+      .call(xAxis)
+      .selectAll('.tick line')
+      .classed('origin', d => d == 0);
+
+    svg.selectAll('rect.bar')
+        .data(yearSlice, d => d.name)
+        .enter()
+        .append('rect')
+        .attr('class', 'bar')
+        .attr('x', x(0)+1)
+        .attr('width', d => x(d.value)-x(0)-1)
+        .attr('y', d => y(d.rank)+5)
+        .attr('height', y(1)-y(0)-barPadding)
+        .style('fill', d => d.colour);
+
+    svg.selectAll('text.label')
+      .data(yearSlice, d => d.name)
+      .enter()
+      .append('text')
+      .attr('class', 'label')
+      .attr('x', d => x(d.value)-8)
+      .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
+      .style('text-anchor', 'end')
+      .html(d => d.name);
+
+    svg.selectAll('text.valueLabel')
+      .data(yearSlice, d => d.name)
+      .enter()
+      .append('text')
+      .attr('class', 'valueLabel')
+      .attr('x', d => x(d.value)+5)
+      .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
+      .text(d => d3.format(',.0f')(d.lastValue));
+
+      var yearText;
+      
+    yearText = svg.append('text')      
+      .attr('class', 'yearText')
+      .attr('x', width-margin.right-20)
+      .attr('y', height-25)
+      .attr("font-size", yearFontSize+"px")
+      .style('text-anchor', 'end')
+      .html(parseInt(yearSlice[0].year));
+
+    let ticker = d3.interval(e => {
+
+      if(animateState!=2 && animateState!=4) {
+
+      yearSlice = data.filter(d => d.index == index && !isNaN(d.value));
+
+      x.domain([0, d3.max(yearSlice, d => d.value)]); 
+      
+      svg.select('.xAxis')
+        .transition()
+        .duration(tickDuration)
+        .ease(d3.easeLinear)
+        .call(xAxis);
+
+      let bars = svg.selectAll('.bar').data(yearSlice, d => d.name);
+      
+      bars
+        .enter()
+        .append('rect')
+        .attr('class', d => 'bar '+d.name.replace(/\s/g,'_'))
+        .attr('x', x(0)+1)
+        .attr( 'width', d => x(d.value)-x(0)-1)
+        .attr('y', d => y(top_n+1)+5)
+        .attr('height', y(1)-y(0)-barPadding)
+        .style('fill', d => d.colour)
+        .transition()
+        .duration(tickDuration)
+        .ease(d3.easeLinear)
+        .attr('y', d => y(d.rank)+5);
+            
+      bars
+        .transition()
+          .duration(tickDuration)
+          .ease(d3.easeLinear)
+          .attr('width', d => x(d.value)-x(0)-1)
+          .attr('y', d => y(d.rank)+5);
+              
+      bars
+      .exit()
+      .transition()
+        .duration(tickDuration)
+        .ease(d3.easeLinear)
+        .attr('width', d => x(d.value)-x(0)-1)
+        .attr('y', d => y(top_n+1)+5)
+        .remove();
+
+      let labels = svg.selectAll('.label')
+        .data(yearSlice, d => d.name);
+      
+      labels
+        .enter()
+        .append('text')
+        .attr('class', 'label')
+        .attr('x', d => x(d.value)-8)
+        .attr('y', d => y(top_n+1)+5+((y(1)-y(0))/2))
+        .style('text-anchor', 'end')
+        .html(d => d.name)    
+        .transition()
+        .duration(tickDuration)
+        .ease(d3.easeLinear)
+        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
+                  
+      labels
+        .transition()
+        .duration(tickDuration)
+        .ease(d3.easeLinear)
+        .attr('x', d => x(d.value)-8)
+        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
+      
+      labels
+          .exit()
+          .transition()
+            .duration(tickDuration)
+            .ease(d3.easeLinear)
+            .attr('x', d => x(d.value)-8)
+            .attr('y', d => y(top_n+1)+5)
+            .remove();         
+      
+      let valueLabels = svg.selectAll('.valueLabel').data(yearSlice, d => d.name);
+
+      valueLabels
+        .enter()
+        .append('text')
+        .attr('class', 'valueLabel')
+        .attr('x', d => x(d.value)+5)
+        .attr('y', d => y(top_n+1)+5)
+        .text(d => d3.format(',.0f')(d.lastValue))
+        .transition()
+        .duration(tickDuration)
+        .ease(d3.easeLinear)
+        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
+              
+      valueLabels
+        .transition()
+          .duration(tickDuration)
+          .ease(d3.easeLinear)
+          .attr('x', d => x(d.value)+5)
+          .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
+          .tween("text", function(d) {
+              let i = d3.interpolateRound(d.lastValue, d.value);
+              return function(t) {
+                this.textContent = d3.format(',')(i(t));
+              };
+          });
+
+      valueLabels
+        .exit()
+        .transition()
+          .duration(tickDuration)
+          .ease(d3.easeLinear)
+          .attr('x', d => x(d.value)+5)
+          .attr('y', d => y(top_n+1)+5)
+          .remove();      
+
+      yearText.html(parseInt(yearSlice[0].year));
+    }
+
+    if(animateState==1 && index == lastIndex)
+    {
+//        ticker.stop();
+        animateState=4;
+
+        var audio = document.getElementById("audio");
+        audio.pause(); 
+        audio.currentTime = 0;
+
+        setButtons();
+    }
+
+    if(animateState==0) {
+      index=0;
+    } else if (animateState==1) {
+      index++;
+      if(index > lastIndex)  index=lastIndex;
+    } else if (animateState==3) {
+      index=0;
+      animateState = 0;
+    } else if (animateState==4) {
+      index=lastIndex;
+    } else {
+      // do nothing
+    }
+
+   },tickDuration);
+
+  });
+}
+
+function setButtons() {
+      var audio = document.getElementById("audio");
+      var play = document.getElementById("playButton"); 
+      var pause = document.getElementById("pauseButton");       
+      var mute = document.getElementById("muteButton"); 
+      var unmute = document.getElementById("unmuteButton"); 
+
+      if (audio.paused) {
+          play.style.display = "inline";
+          pause.style.display = "none";
+      } else {
+          play.style.display = "none";
+          pause.style.display = "inline";
+      }
+
+      if(audio.muted) {
+          mute.style.display = "none";
+          unmute.style.display = "inline";
+      } else {
+          mute.style.display = "inline";
+          unmute.style.display = "none";
+      }
+}
+
+function restart() {
+    var audio = document.getElementById("audio");
+    audio.pause(); 
+    audio.currentTime = 0;
+
+    animateState=3;
+
+    setButtons();
+}
+
+function playPause() {
+      var audio = document.getElementById("audio"); 
+
+      if (audio.paused) {
+          audio.play();
+          animateState=1;
+      } else {
+          audio.pause();
+          animateState=2;
+      }
+
+      setButtons();
+}
+
+function muteUnmute() {
+    var audio = document.getElementById("audio"); 
+
+    if(audio.muted) {
+      audio.muted = false;
+    } else {
+      audio.muted = true;
+    }
+
+    setButtons();
+}
+
+</script>
+
+<script>
+
+
+function init() {
+  var value;
+
+	var color=get('frameColor');
+
+	if(color != null)  {frameColor=color;}
+    document.documentElement.style.setProperty('--frameColor', frameColor);
+    
+    document.documentElement.style.setProperty('--aspectRatio', aspectRatio);
+//    aspectRatio = getComputedStyle(document.documentElement).getPropertyValue('--aspectRatio');    
+
+	document.getElementById("title").innerHTML = title;
+	
+  value=get('chartSubTitle');
+  if(value!=null)  chartSubTitle=stripTags(value);    
+  document.getElementById("toolChartSubTitle").innerHTML = chartSubTitle;
+//  document.getElementById("chartSubTitle").value=chartSubTitle;
+
+  value=get('titleFontSize');
+  if(value!=null) {
+      if(parseInt(value) > 0)  titleFontSize=stripTags(value);    
+  }
+  
+  document.getElementById("toolChartSubTitle").style.fontSize = (parseInt(titleFontSize)*0.75).toString()+"vw"; 
+
+  value=get('yearFontSize');
+  if(value!=null) {
+      if(parseInt(value) > 0)  yearFontSize=stripTags(value);  
+  }
+//  document.getElementById("yearFontSize").value=yearFontSize; 
+
+  value=get('urlMusic');
+  if(value!=null)  urlMusic=stripTags(value);    
+  document.getElementById("audio").src = urlMusic; 
+//  document.getElementById("urlMusic").value=urlMusic; 
+
+  value=get('urlData');
+  if(value!=null)  urlData=stripTags(value);
+//  document.getElementById("urlData").value=urlData;
+
+  value=get('animationSpeed');
+  if(value!=null) {
+      if(parseInt(value) > 0)  animationSpeed=stripTags(value); 
+  }
+//  document.getElementById("animationSpeed").value=animationSpeed;    
+
+	flipCard(false);
+	setEmbedText();
+
+  setButtons();
+
+  animate();
+}
+
+init();
+
+</script>
+
+</body>
+</html> 
