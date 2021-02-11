@@ -777,7 +777,7 @@ function setEmbedText() {
     var sizeLarge = document.getElementById("toolLarge");
 	  var text;
 	
-    text='<div style="overflow: hidden; padding-top: 80%; position: relative;">';
+    text='<div style="overflow: hidden; padding-top: '+(aspectRatio*100)+'%; position: relative;">';
       
     text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color.value)+
         '?chartTitle='+encodeURIComponent(title)+
