@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bar Race Chart</title>
+
+<title>Advertisement Profit Calculator</title>
 <meta name="copyright" content="Nicolas Joyeux" />
 	
 <meta charset="UTF-8">
@@ -64,7 +65,7 @@ body {
 	line-height: 8vw;
 	height: 8vw;
 	color: white;
-	font-size: 8vw;
+	font-size: 6vw;
 /*	
 	background-color: lightgreen;
 	border-radius: 2vh;
@@ -77,6 +78,91 @@ body {
 	background-color: white;
 	margin: 0 1vw 0 1vw;
 	box-shadow: 2vw 0 1vw -1vw rgba(0,0,0,0.6) inset, -2vw 0 1vw -1vw rgba(0,0,0,0.6) inset;
+}
+
+.toolSmallLabel {
+    font-size: 3vw;
+    width: 50vw;
+    text-align: left;
+}
+
+.toolLineBreak {
+  height: 4vw;
+}
+
+.toolLineText {
+    font-size: 3vw;
+    border-radius: 1vw;
+    border: 0.35vw solid var(--frameColor);
+    margin: 0.5vw;
+    padding: 1vw;
+    width: 18vw;
+    height: 4vw;
+}
+
+.toolLineTextResult {
+    font-size: 3vw;
+    border-radius: 1vw;
+    border: 0.35vw solid var(--frameColor);
+    background-color: #ccc;
+    margin: 0.5vw;
+    padding: 1vw;
+    width: 18vw;
+    height: 4vw;
+}
+
+.toolMoreInfo {
+  width: 3vw;
+  height: 3vw;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.tooltip .tooltiptext {
+  min-height: 8vw;
+  font-size: 3vw;
+  visibility: hidden;
+  width: 45vw;
+  background-color: black;
+  color: #fff;
+  border-radius: 2vw;
+  padding: 1vw;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -2vw;
+  left: 120%;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 4vw;
+  right: 100%;
+  margin-top: -2vw;
+  border-width: 2vw;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.toolUnit {
+  font-size: 2.5vw;
+}
+
+.toolComparison {
+    font-size: 2.5vw;    
+    margin: 0.5vw;
+    padding: 1vw;
+    min-height: 6vw;
 }
 
 .toolFlipCard {    
@@ -122,43 +208,7 @@ body {
 
 .toolRow {
     display: flex;
-    height: 85%;
-}
-
-
-.toolchartTitle {
-    font-size:4vw;
-    max-height: 6vw;
-    min-height: 6vw;
-}
-
-.toolAnimation {
-    flex: 1;
-}
-
-.toolButtons {    
-    height: 14vw;
-}
-
-.toolButton {
-    font-size: 5vw;
-    margin: 2vw;
-    padding: 1vw;
-    border: 0.5vw solid var(--frameColor);
-    border-radius: 1vw;
-    background: var(--frameColor);
-    color: white;
-}
-
-.toolButton:hover {
-    cursor:pointer;
-    background: white;
-    color: var(--frameColor);
-}
-
-.toolButtonImage {
-    height: 4vw;
-    color: white;
+    align-items: center;
 }
 
 .toolFooter {
@@ -199,14 +249,6 @@ body {
 .toolEmbedRadio {
     height:2vw;
     width:2vw;
-}
-
-.toolEmbedInput {
-    margin: 0.5vw;
-    padding: 0.5vw;
-    font-size: 2.5vw;
-    border-radius: 1vw;
-    border: 0.5vw solid var(--frameColor);
 }
 
 .toolEmbedTextarea {
@@ -440,133 +482,200 @@ body {
 		<div id="flipCardInner" class="toolFlipCardInner">
 			<div class="toolFlipCardFront">
 
-        <div id="toolChartSubTitle" class="toolchartTitle">            
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="totalSpending">Total spending
+
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">The amount of money you will spend for your ad campaign. A small business spends about 1000$/month, an average business spends 10000$/month and a big business 30000$/month.</span>
+        </div>
+        </label>
+        <input id="totalSpending" class="toolLineText"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" autofocus oninput="calculate()" onchange="setMoneyInput(this)">
+        <span class="toolUnit">$</span>
         </div>
         
-
-        <div id="animation" class="toolAnimation"></div>
-
-        <div class="toolButtons">
-          <button class="toolButton" onclick="restart()">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-              xml:space="preserve" class="toolButtonImage" viewBox="0 0 512 512" x="0px" y="0px" id="svg-3e0f"
-              style="enable-background:new 0 0 512 512;">
-              <path style="fill:#77DD00;"
-                d="M403.721,272.047c0,39.891-15.598,77.684-44.09,105.878c-28.195,28.494-65.987,44.092-105.88,44.092  s-77.686-15.598-105.88-44.092c-28.493-28.194-44.09-65.987-44.09-105.878c0-39.893,15.598-77.686,44.09-105.88  c28.194-28.494,65.987-44.09,105.88-44.09c25.196,0,49.789,6.298,71.987,18.596l-58.79,71.386h231.255L440.613,0l-57.588,70.185  C344.333,45.291,299.94,32.094,253.75,32.094c-64.187,0-124.477,24.894-169.766,70.185c-45.292,45.291-70.187,105.58-70.187,169.768  s24.895,124.475,70.187,169.766C129.274,487.105,189.562,512,253.75,512s124.476-24.895,169.766-70.187  c45.291-45.291,70.187-105.578,70.187-169.766V257.05h-89.982V272.047z">
-              </path>
-              <g>
-                <path style="fill:#66BB00;"
-                  d="M403.721,257.05h89.982v14.997c0,64.187-24.896,124.475-70.187,169.766   C378.226,487.105,317.938,512,253.75,512v-89.982c39.893,0,77.686-15.598,105.88-44.092c28.493-28.194,44.09-65.987,44.09-105.878   V257.05z">
-                </path>
-                <path style="fill:#66BB00;"
-                  d="M325.736,140.673c-22.198-12.299-46.791-18.596-71.987-18.596V32.094   c46.19,0,90.583,13.197,129.275,38.092L440.613,0l57.59,212.059H266.948L325.736,140.673z">
-                </path>
-              </g>
-            </svg>
-            Restart
-          </button>
-          <button id="playButton" class="toolButton" onclick="playPause()">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-              xml:space="preserve" class="toolButtonImage" viewBox="0 0 512 512" x="0px" y="0px" id="svg-4ba3"
-              style="enable-background:new 0 0 512 512;">
-              <path style="fill:#61DE56;"
-                d="M437.02,74.98C388.667,26.628,324.38,0,256,0C187.619,0,123.332,26.628,74.98,74.98  C26.629,123.331,0,187.619,0,256c0,68.38,26.629,132.667,74.98,181.019C123.332,485.371,187.619,512,256,512  c68.379,0,132.666-26.629,181.02-74.981C485.371,388.667,512,324.38,512,256C512,187.619,485.371,123.331,437.02,74.98z">
-              </path>
-              <path style="fill:#13C37B;"
-                d="M437.02,74.981C388.666,26.629,324.379,0,256,0h-0.001v512H256c68.38,0,132.667-26.628,181.02-74.979  C485.371,388.668,512,324.381,512,256C512,187.62,485.371,123.333,437.02,74.981z">
-              </path>
-              <path style="fill:#F2F2F2;"
-                d="M392.033,243.01L199.232,131.697c-4.642-2.68-10.359-2.68-15,0s-7.5,7.631-7.5,12.99v222.621  c0,5.359,2.859,10.311,7.5,12.99c2.32,1.34,4.91,2.01,7.5,2.01s5.18-0.67,7.5-2.01L392.033,268.99c4.641-2.679,7.5-7.631,7.5-12.99  C399.533,250.641,396.674,245.69,392.033,243.01z">
-              </path>
-              <path style="fill:#D9D9D9;"
-                d="M392.033,243.01l-136.032-78.537v183.052l136.032-78.534c4.641-2.679,7.5-7.631,7.5-12.99  C399.533,250.641,396.674,245.69,392.033,243.01z">
-              </path>
-            </svg>
-            Play
-          </button>
-          <button id="pauseButton" class="toolButton" onclick="playPause()">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-              xml:space="preserve" class="toolButtonImage" viewBox="0 0 464 464" id="svg-3d20">
-              <path
-                d="m464 232c0 128.128906-103.871094 232-232 232s-232-103.871094-232-232 103.871094-232 232-232 232 103.871094 232 232zm0 0"
-                fill="#ab2300"></path>
-              <g fill="#f1f2f2">
-                <path d="m160 136h48v192h-48zm0 0"></path>
-                <path d="m256 136h48v192h-48zm0 0"></path>
-              </g>
-            </svg>
-            Pause
-          </button>
-          <button id="muteButton" class="toolButton" onclick="muteUnmute()">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-              xml:space="preserve" class="toolButtonImage" viewBox="0 0 512 512" x="0px" y="0px" id="svg-d9c6"
-              style="enable-background:new 0 0 512 512;">
-              <circle style="fill:#FFD400;" cx="256" cy="256" r="256"></circle>
-              <path style="fill:#FF9F00;"
-                d="M511.686,268.679L406.033,163.026l-6.712,4.529L308.32,75L75,330.097l181.891,181.891  C393.617,511.521,505.091,403.879,511.686,268.679z">
-              </path>
-              <polygon style="fill:#444444;"
-                points="203.114,229.628 201.629,256.142 199.72,292.412 166.985,330.097 75,330.097 75,181.904   166.773,181.904 166.985,181.691 ">
-              </polygon>
-              <polygon style="fill:#292929;" points="201.629,256.142 199.72,292.412 166.985,330.097 75,330.097 75,256.142 ">
-              </polygon>
-              <g>
-                <path style="fill:#00ABE9;"
-                  d="M352.156,256.142c0,13.575-4.03,27.149-11.878,38.815l-17.816-11.666   c5.515-8.271,8.273-17.816,8.273-27.149c0-9.333-2.758-18.878-8.273-27.151l17.816-11.666   C348.126,228.991,352.156,242.567,352.156,256.142z">
-                </path>
-                <path style="fill:#00ABE9;"
-                  d="M437,256.142c0,29.907-8.908,59.815-26.301,85.904l-4.666,7.212l-17.605-11.879l4.666-6.999   c15.06-22.484,22.696-48.362,22.696-74.238c0-25.878-7.636-51.755-22.696-74.238l-4.666-7l17.605-11.878l4.666,7.212   C428.092,196.327,437,226.234,437,256.142z">
-                </path>
-                <path style="fill:#00ABE9;"
-                  d="M394.367,256.142c0,21.634-6.152,43.27-18.878,62.36l-4.667,7.211l-17.816-11.878l4.878-6.999   c10.181-15.485,15.273-33.09,15.273-50.694c0-17.605-5.092-35.211-15.273-50.694l-4.878-7l17.816-11.878l4.667,7.212   C388.215,212.871,394.367,234.506,394.367,256.142z">
-                </path>
-              </g>
-              <polygon style="fill:#5A5A5A;" points="308.32,75 308.32,437 166.985,330.097 166.985,181.691 "></polygon>
-              <polygon style="fill:#444444;" points="166.985,256.142 308.32,256.142 308.32,437 166.985,330.097 "></polygon>
-              <g>
-                <path style="fill:#0095FF;"
-                  d="M330.734,256.142h21.422c0,13.575-4.03,27.149-11.878,38.815l-17.816-11.666   C327.977,275.02,330.734,265.475,330.734,256.142z">
-                </path>
-                <path style="fill:#0095FF;"
-                  d="M394.367,256.142c0,21.634-6.152,43.27-18.878,62.36l-4.667,7.211l-17.816-11.878l4.878-6.999   c10.181-15.485,15.273-33.09,15.273-50.694L394.367,256.142L394.367,256.142z">
-                </path>
-                <path style="fill:#0095FF;"
-                  d="M437,256.142c0,29.907-8.908,59.815-26.301,85.904l-4.666,7.212l-17.605-11.879l4.666-6.999   c15.06-22.484,22.696-48.362,22.696-74.238H437z">
-                </path>
-              </g>
-            </svg>
-            Mute
-          </button>
-          <button id="unmuteButton" class="toolButton" onclick="muteUnmute()">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
-              xml:space="preserve" class="toolButtonImage" viewBox="0 0 512 512" x="0px" y="0px" id="svg-4282"
-              style="enable-background:new 0 0 512 512;">
-              <circle style="fill:#FFD400;" cx="256" cy="256" r="256"></circle>
-              <path style="fill:#FF9F00;"
-                d="M511.244,275.803L310.441,75L75,330.804l181.193,181.193  C390.827,511.898,501.14,407.87,511.244,275.803z">
-              </path>
-              <polygon style="fill:#444444;"
-                points="205.235,230.335 203.75,256.849 201.842,293.119 169.106,330.804 75,330.804 75,182.611   168.894,182.611 169.106,182.398 ">
-              </polygon>
-              <polygon style="fill:#292929;" points="203.75,256.849 201.842,293.119 169.106,330.804 75,330.804 75,256.849 ">
-              </polygon>
-              <polygon style="fill:#5A5A5A;" points="310.441,75 310.441,437 169.106,330.804 169.106,182.398 "></polygon>
-              <polygon style="fill:#FF3636;"
-                points="402.215,256.849 437,291.846 422.153,306.694 387.155,271.908 352.156,306.694   337.31,291.846 372.095,256.849 337.31,221.85 352.156,207.003 387.155,241.789 422.153,207.003 437,221.85 ">
-              </polygon>
-              <polygon style="fill:#444444;" points="169.106,256.849 310.441,256.849 310.441,437 169.106,330.804 "></polygon>
-              <polygon style="fill:#F40000;"
-                points="437,291.846 422.153,306.694 387.155,271.908 352.156,306.694 337.31,291.846   372.095,256.849 402.215,256.849 ">
-              </polygon>
-            </svg>
-            Unmute
-          </button>
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="numberImpressions">Total number of impressions
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">The total amount of times your ad will be displayed. The total number of impressions = Number of visitors X Number of average pages visited by visitors X Number of impressions per page.</span>
         </div>
-      </div>
-      
-      <audio id="audio">       
-        <source type="audio/mpeg">      
-      </audio> 
+        </label>
+        <input id="numberImpressions" class="toolLineText"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setPosIntInput(this)">
+        <span class="toolUnit">Impressions</span>
+        </div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="ctr">Click through Rate in % (CTR)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Ratio of visitors who click on the ad to the number of total visitors who view the ad. Google Ads search has a value of about 1.55%, Google Ads display has a value of about 0.42%.</span>
+        </div>
+        </label>
+        <input id="ctr" class="toolLineText"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setPercentInput(this)">
+        <span class="toolUnit">% Clicks/Impression</span>
+        </div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="cvr">Conversion Rate in % (CVR)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Ratio of visitors that complete a sale (a conversion) out of the total number of visitors. Google Ads search has a value of about 3.75%, Google Ads display has a value of about 0.77%.</span>
+        </div>
+        </label>
+        <input id="cvr" class="toolLineText"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setPercentInput(this)">
+        <span class="toolUnit">% Conversions/Click</span>
+        </div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="salesCommission">Sales commission
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">How much money do you earn on average each time a visitor completes a sale. Sales commission usually range between 5$ and 50$.</span>
+        </div>
+        </label>
+        <input id="salesCommission" class="toolLineText"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setMoneyInput(this)">
+        <span class="toolUnit">$/Conversion</span>
+        </div>
+
+        <div class="toolLineBreak"></div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="numberClicks">Average number of clicks
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">How many times, on average, visitors will click on your ad.</span>
+        </div>
+        </label>
+        <input id="numberClicks" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">Clicks</span>
+        </div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="numberConversions">Average number of conversions
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">How many sales, on average, to expect.</span>
+        </div>
+        </label>
+        <input id="numberConversions" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">Conversions</span>
+        </div>
+
+        <div class="toolLineBreak"></div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="cpm">Cost per thousand (CPM)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">The cost you pay for one thousand impressions of an advertisement.</span>
+        </div>
+        </label>
+        <input id="cpm" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">$/1000 Impressions</span>
+        </div>
+
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="cpc">Cost Per Click (CPC)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">The amount you pay, on average, for each click on your ad.</span>
+        </div>
+        </label>
+        <input id="cpc" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">$/Click</span>
+        </div>
+
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="cpa">Cost Per Action (CPA)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Cost to acquire one paying customer.</span>
+        </div>
+        </label>
+        <input id="cpa" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">$/Conversion</span>
+        </div>
+
+        <div class="toolLineBreak"></div>        
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="rpm">Revenue per thousand impressions (RPM)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Expected revenue for every thousand impressions.</span>
+        </div>
+        </label>
+        <input id="rpm" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">$/1000 Impressions</span>
+        </div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="epc">Earnings per click (EPC)
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Average amount of money you earn when a visitor clicks your ad.</span>
+        </div>
+        </label>
+        <input id="epc" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">$/click</span>
+        </div> 
+        
+        <div class="toolLineBreak"></div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="profitRatio">Profit Ratio
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Ratio of the Net profit to the Total spending. If the ratio is less than 1 then the ad campaign is not economically viable. More than 1 means it's economically viable.</span>
+        </div>
+        </label>
+        <input id="profitRatio" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        </div>
+
+        <div id="profitRatioComparison" class="toolComparison center"></div>   
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="revenue">Revenue
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Sales income.</span>
+        </div>
+        </label>
+        <input id="revenue" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">$</span>
+        </div>
+
+        <div class="toolRow">
+        <label class="toolSmallLabel" for="netProfit">Net profit
+        <div class="tooltip">
+        <img class="toolMoreInfo" src="../images/questionMark.svg" alt="(?)"> 
+        <span class="tooltiptext">Your expected profit after running the ad campaign.</span>
+        </div>
+        </label>
+        <input id="netProfit" class="toolLineTextResult"  type="text" autocomplete="off" 
+        size="10" min="0" step="any" oninput="calculate()" onchange="setInput(this)" readonly>
+        <span class="toolUnit">$</span>
+        </div>  
+
+
+			</div>
 
 			<div class="toolFlipCardBack toolEmbedText">
         <span>Share: </span>
@@ -634,27 +743,6 @@ body {
         <p>Embed: 
                 <a href="" onClick="window.open(urlHowtoEmbed, '_blank')">(How do I embed a tool in my website?)</a>
             </p>
-
-            </br> 
-            <label for="chartTitle">Chart Title:</label>
-            <input type="text" id="chartTitle" class="toolEmbedInput" size="24" onchange="setEmbedText()">
-            </br>   
-            <label for="chartSubTitle">Chart Subtitle:</label>
-            <input type="text" id="chartSubTitle" class="toolEmbedInput" size="24" onchange="setEmbedText()">
-            </br>            
-            <label for="labelFontSize">Label Font Size:</label>
-            <input type="text" id="labelFontSize" class="toolEmbedInput" size="8" onchange="setEmbedText()"> Pixels
-            </br>
-            <label for="urlMusic">URL of Music:</label>
-            <input type="text" id="urlMusic" class="toolEmbedInput" size="24" onchange="setEmbedText()">
-            </br>
-            <label for="urlData">URL of Data:</label>
-            <input type="text" id="urlData" class="toolEmbedInput" size="24" onchange="setEmbedText()">
-            </br>
-            <label for="animationSpeed">Animation Tick Duration:</label>
-            <input type="text" id="animationSpeed" class="toolEmbedInput" size="8" onchange="setEmbedText()"> ms
-            </br>
-
           </br>
 				<label for="frameColor">Frame Color: </label> <input type="color" class="toolEmbedColor" id="frameColor" value="#00008b" onchange="setEmbedText()">
 				
@@ -676,7 +764,7 @@ body {
 					<img src="../images/plus.png" alt="Plus" style="width:100%;">
 				</div>          
 				<div class="column9 centerVertical toolFooterText">                   
-					Create your own bar race chart
+					More info about this calculator
 				</div>                   
 			</div>
 		</div>
@@ -707,11 +795,11 @@ body {
 
 <script>
 
-var title="Bar Race Chart";
+const title="Advertisement Profit Calculator";
 var frameColor="rgba(0, 0, 139, 1)";
-const aspectRatio=1.2;
+const aspectRatio=1.3;
 const urlSite="//www.toolsecology.com/";
-const toolFilename="barRaceChart.html";
+const toolFilename="advertisementProfitCalculator.html";
 const urlTool = urlSite+"tools/html/"+toolFilename;
 const urlMoreInfo = urlSite+toolFilename;
 const urlFreeTools = urlSite+"Free-Tools.html";
@@ -719,16 +807,6 @@ const urlHowtoEmbed = urlSite+"How-to-Embed.html";
 const mimimumX=480;
 const urlShare = "https:"+urlSite+toolFilename;
 const textShare="Hey! Check this Awesome Tool!";
-
-var frameColor="rgba(0, 0, 139, 1)";
-var chartSubTitle="";
-var titleFontSize="4";
-var labelFontSize="80";
-var urlMusic="";
-var urlData="../data/brand_values.csv";
-var animationSpeed="500";
-
-var animateState=0;  // 0=Stop, 1=Run, 2=Pause, 3=Restart, 4=Finished
 
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
@@ -744,10 +822,6 @@ function copyClipboard() {
 
     // Copy the text inside the text field
     document.execCommand("copy");
-}
-
-function stripTags(str) {
-    return str.replace(/(<([^>]+)>)/gi, "");
 }
 
 var cardSide=0;
@@ -772,25 +846,16 @@ function flipCard(flip) {
 }
 
 function setEmbedText() {
-    var color = document.getElementById("frameColor").value;
-    title = document.getElementById("chartTitle").value;    
-    chartSubTitle = document.getElementById("chartSubTitle").value;
-    labelFontSize = document.getElementById("labelFontSize").value;
-    urlMusic = document.getElementById("urlMusic").value;
-    urlData = document.getElementById("urlData").value;
-    animationSpeed = document.getElementById("animationSpeed").value;
+    var color = document.getElementById("frameColor");
+    var sizeSmall = document.getElementById("toolSmall");
+    var sizeMedium = document.getElementById("toolMedium");
+    var sizeLarge = document.getElementById("toolLarge");
 	  var text;
 	
     text='<div style="overflow: hidden; padding-top: '+(aspectRatio*100)+'%; position: relative;">';
       
-    text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color)+
-        '&chartTitle='+encodeURIComponent(title)+
-        '&chartSubTitle='+encodeURIComponent(chartSubTitle)+
-        '&labelFontSize='+encodeURIComponent(labelFontSize)+
-        '&urlMusic='+encodeURIComponent(urlMusic)+
-        '&urlData='+encodeURIComponent(urlData)+
-        '&animationSpeed='+encodeURIComponent(animationSpeed)+
-        '" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen></iframe></div>';
+    text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color.value)+
+        '" title="'+title+'" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen></iframe></div>';
 
     document.getElementById("textEmbed").value = text;
 
@@ -830,343 +895,106 @@ function toggleFullscreen() {
         }
     }
 }
-</script>
 
-<script src="../javascript/d3.min.js"></script>
+function toFloat(x) {
+    x=x.trim();
+    x=x.replace(",", ".");
+    x=parseFloat(x);
+    if( isNaN(x) )  x=0;
 
-<script>
-
-function insertLastValue(data) {
-    var value = {};
-
-    for(let i = 0; i < data.length; i++) { 
-      if(data[i].name in value) {
-        data[i].lastValue = value[data[i].name];
-      } else {
-        data[i].lastValue = data[i].value;
-      }
-      value[data[i].name]=data[i].value;
-    }
+    return x;
 }
 
-function animate() {
-    var tickDuration = parseInt(animationSpeed);
+function setPosIntInput(input) {    
+    var x=parseInt(input.value);
+    if( x<0 || isNaN(x) )  x=0;
+    input.value=x;
+}
 
-//    var height2 = document.getElementById("animation").offsetHeight;
-//    var width2 = document.getElementById("animation").offsetWidth;
+function setMoneyInput(input) {    
+    var x=toFloat(input.value);
     
-    var width = 600;
-    var height = 500;
+//    x=x.toFixed(2);
+    input.value=x;
+}
 
-    var svg = d3.select("#animation").append("svg")
-      .attr("preserveAspectRatio", "xMinYMin meet")
-      .attr("viewBox", "0 0 "+width+" "+height);
+function setPercentInput(input) {    
+    var x=toFloat(input.value);
+    if(x<0)  x=0;
+    if(x>100)  x=100;
+    input.value=x;
+}
 
-    const margin = {
-      top: 15,
-      right: 5,
-      bottom: 0,
-      left: 5
-    };
-    
-    d3.csv(urlData).then(function(data) {       
-      data.forEach(d => {       
-        d.rank = (+d.rank)-1,
-//        d.lastValue = +d.lastValue,
-        d.value = +d.value,
-        d.index = +d.index,
-        d.value = isNaN(d.value) ? 0 : d.value,
-        d.colour = d3.hsl(Math.random()*360,0.75,0.75)
-    });
-    
-    let index = 0;
-    let lastIndex = d3.max(data, d => d.index);
-
-    var top_n = d3.max(data, d => d.rank)+1;    
-    let barPadding = (height-(margin.bottom+margin.top))/(top_n*5);
-
-    let labelSlice = data.filter(d => d.index == index && !isNaN(d.value));
-
-    insertLastValue(data);
-        
-    let x = d3.scaleLinear()
-      .domain([0, d3.max(labelSlice, d => d.value)])
-      .range([margin.left, width-margin.right-65]);
-  
-    let y = d3.scaleLinear()
-      .domain([top_n, 0])
-      .range([height-margin.bottom, margin.top]);
-
-    let xAxis = d3.axisTop()
-      .scale(x)
-      .ticks(width > 500 ? 5:2)
-      .tickSize(-(height-margin.top-margin.bottom))
-      .tickFormat(d => d3.format(',')(d));      
-
-    // x axis
-    svg.append('g')
-      .attr('class', 'axis xAxis')
-      .attr('transform', 'translate(0, '+margin.top+')')
-      .call(xAxis)
-      .selectAll('.tick line')
-      .classed('origin', d => d == 0);
-
-    svg.selectAll('rect.bar')
-        .data(labelSlice, d => d.name)
-        .enter()
-        .append('rect')
-        .attr('class', 'bar')
-        .attr('x', x(0)+1)
-        .attr('width', d => x(d.value)-x(0)-1)
-        .attr('y', d => y(d.rank)+5)
-        .attr('height', y(1)-y(0)-barPadding)
-        .style('fill', d => d.colour);
-
-    svg.selectAll('text.label')
-      .data(labelSlice, d => d.name)
-      .enter()
-      .append('text')
-      .attr('class', 'label')
-      .attr('x', d => x(d.value)-8)
-      .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
-      .style('text-anchor', 'end')
-      .html(d => d.name);
-
-    svg.selectAll('text.valueLabel')
-      .data(labelSlice, d => d.name)
-      .enter()
-      .append('text')
-      .attr('class', 'valueLabel')
-      .attr('x', d => x(d.value)+5)
-      .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
-      .text(d => d3.format(',.0f')(d.lastValue));
-
-      var labelText;
-      
-    labelText = svg.append('text')      
-      .attr('class', 'labelText')
-      .attr('x', width-margin.right-20)
-      .attr('y', height-25)
-      .attr("font-size", labelFontSize+"px")
-      .style('text-anchor', 'end')
-      .html(labelSlice[0].label);
-
-    let ticker = d3.interval(e => {
-
-      if(animateState!=2 && animateState!=4) {
-
-      labelSlice = data.filter(d => d.index == index && !isNaN(d.value));
-
-      x.domain([0, d3.max(labelSlice, d => d.value)]); 
-      
-      svg.select('.xAxis')
-        .transition()
-        .duration(tickDuration)
-        .ease(d3.easeLinear)
-        .call(xAxis);
-
-      let bars = svg.selectAll('.bar').data(labelSlice, d => d.name);
-      
-      bars
-        .enter()
-        .append('rect')
-        .attr('class', d => 'bar '+d.name.replace(/\s/g,'_'))
-        .attr('x', x(0)+1)
-        .attr( 'width', d => x(d.value)-x(0)-1)
-        .attr('y', d => y(top_n+1)+5)
-        .attr('height', y(1)-y(0)-barPadding)
-        .style('fill', d => d.colour)
-        .transition()
-        .duration(tickDuration)
-        .ease(d3.easeLinear)
-        .attr('y', d => y(d.rank)+5);
-            
-      bars
-        .transition()
-          .duration(tickDuration)
-          .ease(d3.easeLinear)
-          .attr('width', d => x(d.value)-x(0)-1)
-          .attr('y', d => y(d.rank)+5);
-              
-      bars
-      .exit()
-      .transition()
-        .duration(tickDuration)
-        .ease(d3.easeLinear)
-        .attr('width', d => x(d.value)-x(0)-1)
-        .attr('y', d => y(top_n+1)+5)
-        .remove();
-
-      let labels = svg.selectAll('.label')
-        .data(labelSlice, d => d.name);
-      
-      labels
-        .enter()
-        .append('text')
-        .attr('class', 'label')
-        .attr('x', d => x(d.value)-8)
-        .attr('y', d => y(top_n+1)+5+((y(1)-y(0))/2))
-        .style('text-anchor', 'end')
-        .html(d => d.name)    
-        .transition()
-        .duration(tickDuration)
-        .ease(d3.easeLinear)
-        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
-                  
-      labels
-        .transition()
-        .duration(tickDuration)
-        .ease(d3.easeLinear)
-        .attr('x', d => x(d.value)-8)
-        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
-      
-      labels
-          .exit()
-          .transition()
-            .duration(tickDuration)
-            .ease(d3.easeLinear)
-            .attr('x', d => x(d.value)-8)
-            .attr('y', d => y(top_n+1)+5)
-            .remove();         
-      
-      let valueLabels = svg.selectAll('.valueLabel').data(labelSlice, d => d.name);
-
-      valueLabels
-        .enter()
-        .append('text')
-        .attr('class', 'valueLabel')
-        .attr('x', d => x(d.value)+5)
-        .attr('y', d => y(top_n+1)+5)
-        .text(d => d3.format(',.0f')(d.lastValue))
-        .transition()
-        .duration(tickDuration)
-        .ease(d3.easeLinear)
-        .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1);
-              
-      valueLabels
-        .transition()
-          .duration(tickDuration)
-          .ease(d3.easeLinear)
-          .attr('x', d => x(d.value)+5)
-          .attr('y', d => y(d.rank)+5+((y(1)-y(0))/2)+1)
-          .tween("text", function(d) {
-              let i = d3.interpolateRound(d.lastValue, d.value);
-              return function(t) {
-                this.textContent = d3.format(',')(i(t));
-              };
-          });
-
-      valueLabels
-        .exit()
-        .transition()
-          .duration(tickDuration)
-          .ease(d3.easeLinear)
-          .attr('x', d => x(d.value)+5)
-          .attr('y', d => y(top_n+1)+5)
-          .remove();      
-
-      labelText.html(labelSlice[0].label);
-    }
-
-    if(animateState==1 && index == lastIndex)
-    {
-//        ticker.stop();
-        animateState=4;
-
-        var audio = document.getElementById("audio");
-        audio.pause(); 
-        audio.currentTime = 0;
-
-        setButtons();
-    }
-
-    if(animateState==0) {
-      index=0;
-    } else if (animateState==1) {
-      index++;
-      if(index > lastIndex)  index=lastIndex;
-    } else if (animateState==3) {
-      index=0;
-      animateState = 0;
-    } else if (animateState==4) {
-      index=lastIndex;
+function setFloatOutput(output) {
+    if( isNaN(output) ) {    
+      output="";
     } else {
-      // do nothing
+      output=output.toFixed(2);
+      output=output.toString();
     }
 
-   },tickDuration);
-
-  });
+    return output;
 }
 
-function setButtons() {
-      var audio = document.getElementById("audio");
-      var play = document.getElementById("playButton"); 
-      var pause = document.getElementById("pauseButton");       
-      var mute = document.getElementById("muteButton"); 
-      var unmute = document.getElementById("unmuteButton"); 
+function calculate() {
+    var totalSpending=document.getElementById("totalSpending").value;
+    var numberImpressions=document.getElementById("numberImpressions").value;
+    var ctr=document.getElementById("ctr").value;
+    var cvr=document.getElementById("cvr").value;
+    var salesCommission=document.getElementById("salesCommission").value;
 
-      if (audio.paused) {
-          play.style.display = "inline";
-          pause.style.display = "none";
-      } else {
-          play.style.display = "none";
-          pause.style.display = "inline";
-      }
+    totalSpending=toFloat(totalSpending);
+    numberImpressions=toFloat(numberImpressions);
+    ctr=toFloat(ctr);
+    cvr=toFloat(cvr);
+    salesCommission=toFloat(salesCommission);
 
-      if(audio.muted) {
-          mute.style.display = "none";
-          unmute.style.display = "inline";
-      } else {
-          mute.style.display = "inline";
-          unmute.style.display = "none";
-      }
-}
 
-function restart() {
-    var audio = document.getElementById("audio");
-    audio.pause(); 
-    audio.currentTime = 0;
+    var numberClicks = ctr*numberImpressions/100;
+    document.getElementById("numberClicks").value = setFloatOutput(numberClicks);
+    var numberConversions = numberClicks*cvr/100;
+    document.getElementById("numberConversions").value = setFloatOutput(numberConversions);
 
-    animateState=3;
+    document.getElementById("cpm").value = setFloatOutput(totalSpending/numberImpressions*1000);
+    document.getElementById("cpc").value = setFloatOutput(totalSpending/numberClicks);
+    document.getElementById("cpa").value = setFloatOutput(totalSpending/numberConversions);
 
-    setButtons();
-}
+    var revenue = numberConversions*salesCommission;
+    document.getElementById("revenue").value = setFloatOutput(revenue);
+    document.getElementById("netProfit").value = setFloatOutput(revenue-totalSpending);
 
-function playPause() {
-      var audio = document.getElementById("audio"); 
+    document.getElementById("rpm").value = setFloatOutput(revenue/numberImpressions*1000);
+    document.getElementById("epc").value = setFloatOutput(revenue/numberClicks);
 
-      if (audio.paused) {
-          audio.play();
-          animateState=1;
-      } else {
-          audio.pause();
-          animateState=2;
-      }
+    var ratio=revenue/totalSpending;
+    document.getElementById("profitRatio").value = setFloatOutput(ratio);
 
-      setButtons();
-}
-
-function muteUnmute() {
-    var audio = document.getElementById("audio"); 
-
-    if(audio.muted) {
-      audio.muted = false;
-    } else {
-      audio.muted = true;
+    if(isNaN(ratio)) {
+      document.getElementById("profitRatioComparison").innerHTML = "";
+    } else if(ratio<=1) {
+      document.getElementById("profitRatioComparison").innerHTML = "The ad campaign IS NOT economically viable.";
+      document.getElementById("profitRatioComparison").style.color = "red";
+    } else if(ratio>1 && ratio<=2) {
+      document.getElementById("profitRatioComparison").innerHTML = "The ad campaign is economically viable.";
+      document.getElementById("profitRatioComparison").style.color = "green";
+    } else if(ratio>2 && ratio<=3) {
+      document.getElementById("profitRatioComparison").innerHTML = "The ad campaign is very profitable.";
+      document.getElementById("profitRatioComparison").style.color = "green";
+    } else if(ratio>3 && ratio<=4) {
+      document.getElementById("profitRatioComparison").innerHTML = "The ad campaign is greatly profitable.";
+      document.getElementById("profitRatioComparison").style.color = "green";
     }
-
-    setButtons();
+    else if(ratio>4 && ratio<=5) {
+      document.getElementById("profitRatioComparison").innerHTML = "The ad campaign is hugely profitable.";
+      document.getElementById("profitRatioComparison").style.color = "green";
+    }
+    else if(ratio>5) {
+      document.getElementById("profitRatioComparison").innerHTML = "The ad campaign is ludicrously profitable!";
+      document.getElementById("profitRatioComparison").style.color = "green";
+    }
 }
-
-</script>
-
-<script>
-
 
 function init() {
-  var value;
-
 	var color=get('frameColor');
 
 	if(color != null)  {frameColor=color;}
@@ -1175,52 +1003,12 @@ function init() {
     document.documentElement.style.setProperty('--aspectRatio', aspectRatio);
 //    aspectRatio = getComputedStyle(document.documentElement).getPropertyValue('--aspectRatio');    
 
-  value=get('chartTitle');
-  if(value!=null) {
-      title=stripTags(value); 
-  } 
 	document.getElementById("title").innerHTML = title;
-  document.getElementById("chartTitle").value=title;
 	
-  value=get('chartSubTitle');
-  if(value!=null)  chartSubTitle=stripTags(value);    
-  document.getElementById("toolChartSubTitle").innerHTML = chartSubTitle;
-  document.getElementById("chartSubTitle").value=chartSubTitle;
-
-  value=get('titleFontSize');
-  if(value!=null) {
-      if(parseInt(value) > 0)  titleFontSize=stripTags(value);    
-  }
-  
-  document.getElementById("toolChartSubTitle").style.fontSize = (parseInt(titleFontSize)*0.75).toString()+"vw"; 
-
-  value=get('labelFontSize');
-  if(value!=null) {
-      if(parseInt(value) > 0)  labelFontSize=stripTags(value);  
-  }
-  document.getElementById("labelFontSize").value=labelFontSize; 
-
-  value=get('urlMusic');
-  if(value!=null)  urlMusic=stripTags(value);    
-  document.getElementById("audio").src = urlMusic; 
-  document.getElementById("urlMusic").value=urlMusic; 
-
-  value=get('urlData');
-  if(value!=null)  urlData=stripTags(value);
-  document.getElementById("urlData").value=urlData;
-
-  value=get('animationSpeed');
-  if(value!=null) {
-      if(parseInt(value) > 0)  animationSpeed=stripTags(value); 
-  }
-  document.getElementById("animationSpeed").value=animationSpeed;    
-
 	flipCard(false);
 	setEmbedText();
 
-  setButtons();
-
-  animate();
+  calculate();
 }
 
 init();
