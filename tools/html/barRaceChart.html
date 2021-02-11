@@ -724,7 +724,7 @@ var chartSubTitle="";
 var titleFontSize="4";
 var labelFontSize="80";
 var urlMusic="";
-var urlData="";
+var urlData="../data/brand_values.csv";
 var animationSpeed="500";
 
 var animateState=0;  // 0=Stop, 1=Run, 2=Pause, 3=Restart, 4=Finished
@@ -771,15 +771,18 @@ function flipCard(flip) {
 }
 
 function setEmbedText() {
-    var color = document.getElementById("frameColor");
-    var sizeSmall = document.getElementById("toolSmall");
-    var sizeMedium = document.getElementById("toolMedium");
-    var sizeLarge = document.getElementById("toolLarge");
+    var color = document.getElementById("frameColor").value;
+    title = document.getElementById("chartTitle").value;    
+    chartSubTitle = document.getElementById("chartSubTitle").value;
+    labelFontSize = document.getElementById("labelFontSize").value;
+    urlMusic = document.getElementById("urlMusic").value;
+    urlData = document.getElementById("urlData").value;
+    animationSpeed = document.getElementById("animationSpeed").value;
 	  var text;
 	
     text='<div style="overflow: hidden; padding-top: '+(aspectRatio*100)+'%; position: relative;">';
       
-    text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color.value)+
+    text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color)+
         '?chartTitle='+encodeURIComponent(title)+
         '?chartSubTitle='+encodeURIComponent(chartSubTitle)+
         '?labelFontSize='+encodeURIComponent(labelFontSize)+
