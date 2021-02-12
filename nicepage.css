@@ -32018,16 +32018,26 @@ a.u-link.u-text-hover-grey-90:hover {
   }
 }
 @media (max-width: 991px) {
+  .u-header .u-sheet-1 {
+    min-height: 81px;
+  }
+
   .u-header .u-image-1 {
     width: 64px;
     height: 32px;
   }
 
   .u-header .u-menu-1 {
+    margin-top: 23px;
+    margin-bottom: 23px;
     margin-left: 404px;
   }
 }
 @media (max-width: 767px) {
+  .u-header .u-sheet-1 {
+    min-height: 95px;
+  }
+
   .u-header .u-image-1 {
     width: auto;
   }
@@ -32037,7 +32047,13 @@ a.u-link.u-text-hover-grey-90:hover {
   }
 }
 @media (max-width: 575px) {
+  .u-header .u-sheet-1 {
+    min-height: 85px;
+  }
+
   .u-header .u-menu-1 {
+    margin-top: 30px;
+    margin-bottom: 20px;
     margin-left: 24px;
   }
 }
