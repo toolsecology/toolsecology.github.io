@@ -1279,6 +1279,7 @@ function updateState(newstate) {
       setRecommendations();
     } else if(state==6) {
       document.getElementById("panel6").style.visibility = "visible";
+      document.getElementById("panel6").scrollTop = 0;
       playTada();
     }
 }
