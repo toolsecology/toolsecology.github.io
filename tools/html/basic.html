@@ -572,8 +572,8 @@ function flipCard(flip) {
 function setEmbedText() {
     var color = document.getElementById("frameColor");    
 	  var text;
-	
-    text='<div style="overflow: hidden; padding-top: 80%; position: relative;">';
+	    
+    text = '<div style="overflow: hidden; padding-top: '+(aspectRatio*100).toFixed(3)+'%; position: relative;">';
       
     text+='<iframe src="'+urlTool+'?frameColor='+encodeURIComponent(color.value)+
         '" title="'+title+'" style="border:0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" loading="lazy" allowfullscreen></iframe></div>';
