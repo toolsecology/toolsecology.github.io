@@ -380,7 +380,7 @@
 
 @media (max-width: 767px) {
   .u-section-3 .u-sheet-1 {
-    min-height: 856px;
+    min-height: 1341px;
   }
 
   .u-section-3 .u-layout-wrap-1 {
@@ -1891,12 +1891,12 @@
 }
 
 .u-section-13 .u-layout-wrap-1 {
-  width: 901px;
+  width: 750px;
   margin: 0 auto;
 }
 
 .u-section-13 .u-image-1 {
-  min-height: 511px;
+  min-height: 535px;
   background-image: url("images/nick.gif");
   background-position: 50% 50%;
 }
@@ -1906,7 +1906,7 @@
 }
 
 .u-section-13 .u-layout-cell-2 {
-  min-height: 534px;
+  min-height: 535px;
 }
 
 .u-section-13 .u-container-layout-2 {
@@ -1990,12 +1990,11 @@
 
 @media (max-width: 767px) {
   .u-section-13 .u-sheet-1 {
-    min-height: 786px;
+    min-height: 788px;
   }
 
   .u-section-13 .u-layout-wrap-1 {
-    margin-top: 1px;
-    margin-bottom: 1px;
+    margin-bottom: 3px;
     width: auto;
     margin-right: initial;
     margin-left: initial;
@@ -2115,6 +2114,7 @@
   letter-spacing: 5px;
   font-weight: 700;
   width: 655px;
+  text-transform: none;
   margin: 40px auto 0;
 }
 
@@ -2144,12 +2144,6 @@
   background-image: none;
   border-style: none;
   font-size: 1.25rem;
-}
-
-@media (max-width: 1199px) {
-  .u-section-15 .u-text-1 {
-    text-transform: none;
-  }
 }
 
 @media (max-width: 767px) {
